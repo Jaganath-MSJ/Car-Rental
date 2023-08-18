@@ -1,36 +1,57 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Form, Link, redirect } from "react-router-dom";
 import styled from "styled-components";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toastOptionsError, toastOptionsSuccess } from "../utils/ToastOptions";
+import { loginApi } from "../utils/handleApi";
+
+export async function loginAction({ request }) {
+  const formData = await request.formData();
+  const email = formData.get("email");
+  const password = formData.get("password");
+  if (email === "" || password === "") {
+    toast.error("Email or Password is required", toastOptionsError);
+    return false;
+  }
+  try {
+    const data = await loginApi({ email, password });
+    if (data.status) {
+      toast.success(data.msg, toastOptionsSuccess);
+      return redirect("/cars");
+    } else {
+      toast.error(data.msg, toastOptionsError);
+    }
+  } catch (err) {
+    toast.error("Something went wrong", toastOptionsError);
+  }
+  return null;
+}
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   return (
     <Cointainer>
       <div>
         <h1>Log in to your account</h1>
-        <form>
+        <Form method="POST" replace>
           <input
             type="email"
             name="email"
             placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
           />
           <input
             type="password"
             name="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             autoComplete="password"
           />
           <button type="submit">Log in</button>
-        </form>
+        </Form>
         <p>
           Don't have an account? <Link to="/register">Create one now</Link>
         </p>
+        <ToastContainer />
       </div>
     </Cointainer>
   );

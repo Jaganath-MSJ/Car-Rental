@@ -3,7 +3,7 @@ import { GoArrowLeft } from "react-icons/go";
 import { Link, NavLink, Outlet, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Data from "../../data/data.json";
-import CarCategory from "../../components/CarCategory";
+import CarCategory from "../../components/cars/CarCategory";
 
 function HostSingleCar() {
   const { id } = useParams();

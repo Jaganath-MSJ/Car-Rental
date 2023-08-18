@@ -95,16 +95,16 @@ function HostAddCar() {
               onChange={handleFileChange}
             />
           </label>
-          <div className="uploadedImage">
+          <ul className="uploadedImage">
             {selectedFiles.map((file, index) => {
               return (
-                <div key={index}>
+                <li key={index}>
                   <p>{file.name}</p>
                   <AiFillDelete onClick={() => handleRemoveFile(index)} />
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
           <div className="buttons">
             <button type="upload" name="upload" onClick={handleUpload}>
               Upload Images
@@ -174,7 +174,7 @@ const Cointainer = styled.section`
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem 1rem;
-        & > div {
+        & > li {
           display: flex;
           background-color: white;
           border-radius: 0.3rem;
