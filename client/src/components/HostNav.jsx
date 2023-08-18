@@ -8,7 +8,9 @@ function HostNav() {
       <nav>
         <ul>
           <li>
-            <NavLink to="" end>Dashboard</NavLink>
+            <NavLink to="" end>
+              Dashboard
+            </NavLink>
           </li>
           <li>
             <NavLink to="income">Income</NavLink>
@@ -19,6 +21,9 @@ function HostNav() {
           <li>
             <NavLink to="review">Reviews</NavLink>
           </li>
+          <li>
+            <NavLink to="addCar">Add Car</NavLink>
+          </li>
         </ul>
       </nav>
       <Outlet />
@@ -27,7 +32,7 @@ function HostNav() {
 }
 
 const Cointainer = styled.section`
-padding: 0 1.5rem;
+  padding: 0 1.5rem;
   & > nav {
     & > ul {
       display: flex;
@@ -47,6 +52,12 @@ padding: 0 1.5rem;
           text-underline-offset: 0.2rem;
         }
       }
+    }
+  }
+  @media only screen and (max-width: 420px) {
+    padding: 0 1rem;
+    & > nav > ul {
+      gap: 0.5rem;
     }
   }
 `;

@@ -55,7 +55,7 @@ function Host() {
 
 const Cointainer = styled.section`
   padding: 1rem;
-  min-height: 71.2vh;
+  min-height: 71vh;
   .hostTop {
     display: flex;
     gap: 2rem;

@@ -93,7 +93,7 @@ const Nav = styled.header`
       .minMenu {
         display: block;
         position: absolute;
-        top: 3rem;
+        top: 4rem;
         right: 0.5rem;
         display: flex;
         flex-direction: column;
