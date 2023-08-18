@@ -16,6 +16,8 @@ import HostSingleCar from "./pages/host/HostSingleCar";
 import HostCarDetails from "./components/host/HostCarDetails";
 import HostCarPrice from "./components/host/HostCarPrice";
 import HostCarPhoto from "./components/host/HostCarPhoto";
+import HostAddCar from "./pages/host/HostAddCar";
+import HostCarEdit from "./components/host/HostCarEdit";
 
 function App() {
   return (
@@ -43,10 +45,12 @@ function App() {
                 <Route index element={<HostCarDetails />} />
                 <Route path="price" element={<HostCarPrice />} />
                 <Route path="photo" element={<HostCarPhoto />} />
+                <Route path="edit" element={<HostCarEdit />} />
               </Route>
             </Route>
 
             <Route path="review" element={<HostReview />} />
+            <Route path="addCar" element={<HostAddCar />} />
           </Route>
 
           <Route path="*" element={<Page404 />} />

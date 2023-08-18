@@ -40,6 +40,9 @@ function HostSingleCar() {
               <li>
                 <NavLink to="photo">Photo</NavLink>
               </li>
+              <li>
+                <NavLink to="edit">Edit</NavLink>
+              </li>
             </ul>
           </nav>
           <Outlet context={car} />
@@ -51,7 +54,7 @@ function HostSingleCar() {
 
 const Cointainer = styled.section`
   padding: 0.09rem 1rem;
-  min-height: 75.1vh;
+  min-height: 75vh;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -102,6 +105,7 @@ const Cointainer = styled.section`
       }
     }
     .other {
+      width: 100%;
       & > nav > ul {
         display: flex;
         gap: 2rem;
