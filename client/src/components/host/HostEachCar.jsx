@@ -1,8 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-function HostEachCar({ hostCar, index }) {
+function HostEachCar({ hostCar }) {
   return (
     <Article>
       <div className="carImage">

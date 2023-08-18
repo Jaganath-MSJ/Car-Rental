@@ -14,7 +14,7 @@ function HostCars() {
         {Data.cars.slice(0, 6).map((car, index) => {
           return (
             <Link to={`/host/cars/${index}`} key={index}>
-              <HostEachCar hostCar={car} index={index} key={index} />
+              <HostEachCar hostCar={car} key={index} />
             </Link>
           );
         })}
