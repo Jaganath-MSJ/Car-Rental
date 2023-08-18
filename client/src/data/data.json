@@ -1,0 +1,152 @@
+{
+  "filters": ["Hatchback", "Sedan", "Mpv"],
+  "cars": [
+    {
+      "img": "/assets/cars/baleno.jpg",
+      "name": "Baleno",
+      "category": "Hatchback",
+      "description": "A car hatchback is a versatile and compact vehicle type that features a rear door, typically hinged at the top, which provides access to a cargo area. This design allows for efficient use of space and easy loading and unloading of goods. Hatchbacks are known for their practicality, offering a balance between passenger comfort and storage capacity.",
+      "price": 5000,
+      "photos": [
+        "/assets/cars/baleno.jpg",
+        "/assets/cars/swift.jpg",
+        "/assets/cars/i10_nios.jpg",
+        "/assets/cars/jazz.jpg",
+        "/assets/cars/dzire.jpg",
+        "/assets/cars/verna.jpg",
+        "/assets/cars/city.jpg",
+        "/assets/cars/virtus.jpg",
+        "/assets/cars/xuv700.jpg",
+        "/assets/cars/ertiga.jpg",
+        "/assets/cars/innova.jpg",
+        "/assets/cars/kia.jpg"
+      ]
+    },
+    {
+      "img": "/assets/cars/i10_nios.jpg",
+      "name": "I10 Nios",
+      "category": "Hatchback",
+      "description": "A car hatchback is a versatile and compact vehicle type that features a rear door, typically hinged at the top, which provides access to a cargo area. This design allows for efficient use of space and easy loading and unloading of goods. Hatchbacks are known for their practicality, offering a balance between passenger comfort and storage capacity. They are often chosen for urban driving due to their maneuverability and fuel efficiency. With a rear seat that can be folded down, hatchbacks offer additional storage flexibility, making them an ideal choice for a wide range of lifestyles and needs.",
+      "price": 5500,
+      "photos": ["/assets/cars/i10_nios.jpg"]
+    },
+    {
+      "img": "/assets/cars/swift.jpg",
+      "name": "Swift",
+      "category": "Hatchback",
+      "description": "A car hatchback is a versatile and compact vehicle type that features a rear door, typically hinged at the top, which provides access to a cargo area. This design allows for efficient use of space and easy loading and unloading of goods. Hatchbacks are known for their practicality, offering a balance between passenger comfort and storage capacity.",
+      "price": 5700,
+      "photos": ["/assets/cars/swift.jpg"]
+    },
+    {
+      "img": "/assets/cars/jazz.jpg",
+      "name": "Jazz",
+      "category": "Hatchback",
+      "description": "A car hatchback is a versatile and compact vehicle type that features a rear door, typically hinged at the top, which provides access to a cargo area. This design allows for efficient use of space and easy loading and unloading of goods. Hatchbacks are known for their practicality, offering a balance between passenger comfort and storage capacity. They are often chosen for urban driving due to their maneuverability and fuel efficiency. With a rear seat that can be folded down, hatchbacks offer additional storage flexibility, making them an ideal choice for a wide range of lifestyles and needs.",
+      "price": 4900,
+      "photos": ["/assets/cars/jazz.jpg"]
+    },
+    {
+      "img": "/assets/cars/dzire.jpg",
+      "name": "Dzire",
+      "category": "Sedan",
+      "description": "A sedan is a classic automobile body style characterized by its four doors, separate compartments for passengers and cargo, and a closed roof. Known for its sleek and elegant design, a sedan offers comfortable seating for multiple passengers while maintaining a refined appearance.",
+      "price": 6000,
+      "photos": ["/assets/cars/dzire.jpg"]
+    },
+    {
+      "img": "/assets/cars/verna.jpg",
+      "name": "Verna",
+      "category": "Sedan",
+      "description": "A sedan is a classic automobile body style characterized by its four doors, separate compartments for passengers and cargo, and a closed roof. Known for its sleek and elegant design, a sedan offers comfortable seating for multiple passengers while maintaining a refined appearance. With a focus on practicality, sedans often provide a balanced blend of performance, fuel efficiency, and safety features, making them a popular choice for daily commuting and family transportation.",
+      "price": 6400,
+      "photos": ["/assets/cars/verna.jpg"]
+    },
+    {
+      "img": "/assets/cars/city.jpg",
+      "name": "City",
+      "category": "Sedan",
+      "description": "A sedan is a classic automobile body style characterized by its four doors, separate compartments for passengers and cargo, and a closed roof. Known for its sleek and elegant design, a sedan offers comfortable seating for multiple passengers while maintaining a refined appearance.",
+      "price": 6600,
+      "photos": ["/assets/cars/city.jpg"]
+    },
+    {
+      "img": "/assets/cars/virtus.jpg",
+      "name": "Virtus",
+      "category": "Sedan",
+      "description": "A sedan is a classic automobile body style characterized by its four doors, separate compartments for passengers and cargo, and a closed roof. Known for its sleek and elegant design, a sedan offers comfortable seating for multiple passengers while maintaining a refined appearance. With a focus on practicality, sedans often provide a balanced blend of performance, fuel efficiency, and safety features, making them a popular choice for daily commuting and family transportation.",
+      "price": 6100,
+      "photos": ["/assets/cars/virtus.jpg"]
+    },
+    {
+      "img": "/assets/cars/xuv700.jpg",
+      "name": "Xuv 700",
+      "category": "Mpv",
+      "description": "A Multi-Purpose Vehicle (MPV) is a versatile and spacious automobile designed to accommodate multiple passengers and cargo. Combining the practicality of a minivan with the driving dynamics of a sedan, MPVs offer a comfortable and flexible solution for families, group travel, and diverse lifestyle needs.",
+      "price": 7200,
+      "photos": ["/assets/cars/xuv700.jpg"]
+    },
+    {
+      "img": "/assets/cars/ertiga.jpg",
+      "name": "Ertiga",
+      "category": "Mpv",
+      "description": "A Multi-Purpose Vehicle (MPV) is a versatile and spacious automobile designed to accommodate multiple passengers and cargo. Combining the practicality of a minivan with the driving dynamics of a sedan, MPVs offer a comfortable and flexible solution for families, group travel, and diverse lifestyle needs. With ample seating capacity, customizable interior configurations, and often advanced entertainment and safety features, MPVs cater to a wide range of transportation requirements, making them a popular choice for those seeking a balance between functionality and comfort.",
+      "price": 7000,
+      "photos": ["/assets/cars/ertiga.jpg"]
+    },
+    {
+      "img": "/assets/cars/innova.jpg",
+      "name": "Innova",
+      "category": "Mpv",
+      "description": "A Multi-Purpose Vehicle (MPV) is a versatile and spacious automobile designed to accommodate multiple passengers and cargo. Combining the practicality of a minivan with the driving dynamics of a sedan, MPVs offer a comfortable and flexible solution for families, group travel, and diverse lifestyle needs.",
+      "price": 7400,
+      "photos": ["/assets/cars/innova.jpg"]
+    },
+    {
+      "img": "/assets/cars/kia.jpg",
+      "name": "Kia",
+      "category": "Mpv",
+      "description": "A Multi-Purpose Vehicle (MPV) is a versatile and spacious automobile designed to accommodate multiple passengers and cargo. Combining the practicality of a minivan with the driving dynamics of a sedan, MPVs offer a comfortable and flexible solution for families, group travel, and diverse lifestyle needs. With ample seating capacity, customizable interior configurations, and often advanced entertainment and safety features, MPVs cater to a wide range of transportation requirements, making them a popular choice for those seeking a balance between functionality and comfort.",
+      "price": 7800,
+      "photos": ["/assets/cars/kia.jpg"]
+    }
+  ],
+  "reviews": [
+    {
+      "star": 5,
+      "reviewedBy": "Raj",
+      "reviewedOn": "2023-08-17T09:43:50.231Z",
+      "review": "The beach bum is such as awesome van! Such as comfortable trip. We had it for 2 weeks and there was not a single issue. Super clean when we picked it up and the host is very comfortable and understanding. Highly recommend!"
+    },
+    {
+      "star": 3,
+      "reviewedBy": "Ajay",
+      "reviewedOn": "2023-08-15T09:43:50.231Z",
+      "review": "This is our third time using the Modest Explorer for our travels and we love it! No complaints, absolutely perfect!"
+    },
+    {
+      "star": 4,
+      "reviewedBy": "Kowshik",
+      "reviewedOn": "2023-08-10T09:43:50.231Z",
+      "review": "The beach bum is such as awesome van! Such as comfortable trip. We had it for 2 weeks and there was not a single issue. Super clean when we picked it up and the host is very comfortable and understanding. Highly recommend!"
+    }
+  ],
+  "transactions": [
+    {
+      "price": 6000,
+      "date": "2023-08-17T09:43:50.231Z"
+    },
+    {
+      "price": 7000,
+      "date": "2023-08-14T09:43:50.231Z"
+    },
+    {
+      "price": 8000,
+      "date": "2023-08-10T09:43:50.231Z"
+    },
+    {
+      "price": 6700,
+      "date": "2023-08-08T09:43:50.231Z"
+    }
+  ]
+}

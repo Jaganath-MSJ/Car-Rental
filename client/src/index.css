@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: Inter;
+  background-color: #fff7ed;
+  color: #161616;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: #161616;
+}
+
+::-webkit-scrollbar {
+  background-color: #252525;
+  width: 0.7rem;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #e17654;
+  border-radius: 1rem;
+}
