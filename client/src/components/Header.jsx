@@ -17,10 +17,10 @@ function Header() {
             <NavLink to="host">Host</NavLink>
           </li>
           <li>
-            <NavLink to="about">About</NavLink>
+            <NavLink to="cars">Cars</NavLink>
           </li>
           <li>
-            <NavLink to="cars">Cars</NavLink>
+            <NavLink to="about">About</NavLink>
           </li>
           <li>
             <NavLink to="login">Login</NavLink>
@@ -33,10 +33,10 @@ function Header() {
               <NavLink to="host">Host</NavLink>
             </li>
             <li>
-              <NavLink to="about">About</NavLink>
+              <NavLink to="cars">Cars</NavLink>
             </li>
             <li>
-              <NavLink to="cars">Cars</NavLink>
+              <NavLink to="about">About</NavLink>
             </li>
             <li>
               <NavLink to="login">Login</NavLink>
@@ -88,7 +88,7 @@ const Nav = styled.header`
       }
       .menu {
         display: block;
-        font-size: 1.5rem
+        font-size: 1.5rem;
       }
       .minMenu {
         display: block;

@@ -1,72 +1,107 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, Form, redirect } from "react-router-dom";
 import styled from "styled-components";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toastOptionsError, toastOptionsSuccess } from "../utils/ToastOptions";
+import { registerApi } from "../utils/handleApi";
+
+export async function registerAction({ request }) {
+  const formData = await request.formData();
+  const name = formData.get("name");
+  const email = formData.get("email");
+  const phone = formData.get("phone");
+  const city = formData.get("city");
+  const password = formData.get("password");
+  const confirmPassword = formData.get("confirmPassword");
+  if (name.trim().length < 3) {
+    toast.error("Name must be at least 3 characters long", toastOptionsError);
+    return false;
+  } else if (email === "") {
+    toast.error("Name must be at least 3 characters long", toastOptionsError);
+    return false;
+  } else if (phone === "") {
+    toast.error("Phone no is required", toastOptionsError);
+    return false;
+  } else if (city.trim() === "") {
+    toast.error("City is required", toastOptionsError);
+    return false;
+  } else if (password.length < 8) {
+    toast.error(
+      "Password must be at least 8 characters long",
+      toastOptionsError
+    );
+    return false;
+  } else if (password !== confirmPassword) {
+    toast.error(
+      "Password do not match with Confirm Password",
+      toastOptionsError
+    );
+    return false;
+  }
+  try {
+    const data = await registerApi({ name, email, phone, city, password });
+    if (data.status) {
+      toast.success(data.msg, toastOptionsSuccess);
+      return redirect("/login");
+    } else {
+      toast.error(data.msg, toastOptionsError);
+    }
+  } catch (err) {
+    toast.error("Something went wrong", toastOptionsError);
+  }
+
+  return null;
+}
 
 function Regsiter() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [city, setCity] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   return (
     <Cointainer>
       <div>
         <h1>Create your account</h1>
-        <form>
+        <Form method="POST" replace>
           <input
             type="text"
             name="name"
             placeholder="Full name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
             autoComplete="name"
           />
           <input
             type="email"
             name="email"
             placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
           />
           <input
             type="text"
             name="phone"
             placeholder="Phone no"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
             autoComplete="phone"
           />
           <input
             type="text"
             name="city"
             placeholder="City/Town"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
             autoComplete="password"
           />
           <input
             type="password"
             name="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             autoComplete="password"
           />
           <input
             type="password"
-            name="confirmPasswordpassword"
+            name="confirmPassword"
             placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
             autoComplete="password"
           />
           <button type="submit">Create Account</button>
-        </form>
+        </Form>
         <p>
           Already have an account? <Link to="/login">Login</Link>
         </p>
+        <ToastContainer />
       </div>
     </Cointainer>
   );
