@@ -30,10 +30,10 @@ const Container = styled.section`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  padding: 0 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 1.7rem;
   align-items: center;
   color: white;
   & > h1 {
@@ -82,6 +82,9 @@ const Container = styled.section`
     }
     & > a {
       width: 40%;
+    }
+    .inputDate {
+      flex-direction: column;
     }
   }
 `;

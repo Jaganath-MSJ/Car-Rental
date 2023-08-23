@@ -1,9 +1,38 @@
 import React from "react";
-import { AiOutlineMenu } from "react-icons/ai";
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import { AiOutlineMenu } from "react-icons/ai";
+import { FaUserCircle } from "react-icons/fa";
 import styled from "styled-components";
+import { getCurrentUser, selectUserNameById } from "../features/userSlice";
 
 function Header() {
+  const { userId } = useSelector(getCurrentUser);
+  const userName = useSelector((state) => selectUserNameById(state, userId));
+  const Navigation = ({ className }) => {
+    return (
+      <ul className={className}>
+        <li>
+          <NavLink to="host">Host</NavLink>
+        </li>
+        <li>
+          <NavLink to="cars">Cars</NavLink>
+        </li>
+        <li>
+          <NavLink to="about">About</NavLink>
+        </li>
+        <li>
+          <NavLink to="login">Login</NavLink>
+        </li>
+        <li>
+          <NavLink to="profile">
+            <FaUserCircle /> <span>{userName}</span>
+          </NavLink>
+        </li>
+        {/* <li>Logout</li> */}
+      </ul>
+    );
+  };
   const [open, setOpen] = React.useState(false);
   return (
     <Nav>
@@ -12,38 +41,8 @@ function Header() {
       </h1>
       <nav>
         <AiOutlineMenu className="menu" onClick={() => setOpen(!open)} />
-        <ul className="maxMenu">
-          <li>
-            <NavLink to="host">Host</NavLink>
-          </li>
-          <li>
-            <NavLink to="cars">Cars</NavLink>
-          </li>
-          <li>
-            <NavLink to="about">About</NavLink>
-          </li>
-          <li>
-            <NavLink to="login">Login</NavLink>
-          </li>
-          {/* <li>Logout</li> */}
-        </ul>
-        {open && (
-          <ul className="minMenu">
-            <li>
-              <NavLink to="host">Host</NavLink>
-            </li>
-            <li>
-              <NavLink to="cars">Cars</NavLink>
-            </li>
-            <li>
-              <NavLink to="about">About</NavLink>
-            </li>
-            <li>
-              <NavLink to="login">Login</NavLink>
-            </li>
-            {/* <li>Logout</li> */}
-          </ul>
-        )}
+        <Navigation className={"maxMenu"} />
+        {open && <Navigation className={"minMenu"} />}
       </nav>
     </Nav>
   );
@@ -54,15 +53,21 @@ const Nav = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 5rem;
   & > nav {
     & > ul {
       display: flex;
+      align-items: center;
       gap: 1.5rem;
       & > li {
         list-style: none;
         & > a {
           color: #4d4d4d;
           transition: 0.3s ease-in-out;
+          & > svg {
+            margin-bottom: -0.2rem;
+            font-size: 1.2rem;
+          }
         }
         & > a:hover,
         .active {

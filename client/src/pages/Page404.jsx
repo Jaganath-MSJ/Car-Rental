@@ -12,14 +12,14 @@ function Page404() {
 }
 
 const Container = styled.section`
-  min-height: 82.3vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2rem;
   & > h1 {
     font-size: 3rem;
-    align-items: center;
+    text-align: center;
   }
   & > a {
     background-color: #161616;
@@ -33,7 +33,15 @@ const Container = styled.section`
     height: 2.5rem;
     transition: all 0.2s ease-in-out;
     &:hover {
-        box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.3);
+      box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.3);
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+    a {
+      width: 40%;
     }
   }
 `;

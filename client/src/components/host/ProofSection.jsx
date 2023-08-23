@@ -1,6 +1,9 @@
 import React from "react";
 import { AiFillDelete } from "react-icons/ai";
 import styled from "styled-components";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toastOptionsError } from "../../utils/ToastOptions";
 
 function ProofSection({
   selectedFiles,
@@ -11,6 +14,10 @@ function ProofSection({
   const handleFileChange = (e) => {
     e.preventDefault();
     const files = e.target.files;
+    if (files.length + selectedFiles.length > 5) {
+      toast.warning("You can only upload 5 files", toastOptionsError);
+      return;
+    }
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);

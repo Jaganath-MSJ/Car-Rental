@@ -2,36 +2,45 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FaAngleDown, FaAngleLeft } from "react-icons/fa";
 
-function CheckBox({ name, filters, setFilters }) {
+function CheckBox({ currentFilter, selectedFilters, setSelectedFilters }) {
   const [collased, setCollased] = useState(false);
 
   const handleCheckBox = (e) => {
-    // const exist = filters.find((key) => (key===e.target.value));
-    // if(exist) {
-    //   const removed = filters.filter((key) => key!==e.target.value);
-    //   setFilters(removed)
-    // } else {
-    //   setFilters([...filters, e.target.value])
-    // }
+    const exist = selectedFilters.includes(e.target.value);
+    if (exist) {
+      const removed = selectedFilters.filter((key) => key !== e.target.value);
+      setSelectedFilters((prevData) => ({
+        ...prevData,
+        [currentFilter.filtername]: removed,
+      }));
+    } else {
+      setSelectedFilters((prevData) => ({
+        ...prevData,
+        [currentFilter.filtername]: [
+          ...prevData[currentFilter.filtername],
+          e.target.value,
+        ],
+      }));
+    }
   };
 
   return (
     <StyledCheckBox>
       <div className="checkHeader">
-        <h4>{name.filtername}</h4>
+        <h4>{currentFilter.filtername}</h4>
         <button onClick={() => setCollased(!collased)}>
           {collased ? <FaAngleLeft /> : <FaAngleDown />}
         </button>
       </div>
       <div className="allBoxs">
         {!collased &&
-          name.types.map((filter) => {
+          currentFilter.types.map((filter) => {
             return (
               <div className="box" key={filter.id}>
                 <input
                   type="checkBox"
-                  // checked={filters.find((key) => (key===filter.key))}
-                  // value={filter.key}
+                  checked={selectedFilters.includes(filter.value)}
+                  value={filter.value}
                   onChange={handleCheckBox}
                 />
                 &nbsp;
@@ -49,9 +58,6 @@ const StyledCheckBox = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 1rem 0;
-    & > h4 {
-      margin: 0;
-    }
     & > button {
       background: transparent;
       border: none;
@@ -69,9 +75,6 @@ const StyledCheckBox = styled.div`
         height: 1rem;
         border-radius: 0.2rem;
         cursor: pointer;
-      }
-      & > p {
-        margin: 0;
       }
     }
   }

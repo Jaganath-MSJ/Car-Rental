@@ -121,29 +121,31 @@ function CarDetails() {
               </article>
             </div>
           </div>
-          <div className="carReviews">
-            <h4>Reviews</h4>
-            <div>
-              {car.reviews.map((review, index) => {
-                return (
-                  <article key={index}>
-                    <div className="reviewStar">
-                      {[1, 2, 3, 4, 5].map((star, index) => {
-                        return (
-                          star <= review.rating && <AiFillStar key={index} />
-                        );
-                      })}
-                    </div>
-                    <div className="reviewedBy">
-                      {review.userId}
-                      <span>{formatDate1(review.reviewedOn)}</span>
-                    </div>
-                    <div className="reviewDesc">{review.comment}</div>
-                  </article>
-                );
-              })}
+          {car.reviews.length > 0 && (
+            <div className="carReviews">
+              <h4>Reviews</h4>
+              <div>
+                {car.reviews.map((review, index) => {
+                  return (
+                    <article key={index}>
+                      <div className="reviewStar">
+                        {[1, 2, 3, 4, 5].map((star, index) => {
+                          return (
+                            star <= review.rating && <AiFillStar key={index} />
+                          );
+                        })}
+                      </div>
+                      <div className="reviewedBy">
+                        {review.userId}
+                        <span>{formatDate1(review.reviewedOn)}</span>
+                      </div>
+                      <div className="reviewDesc">{review.comment}</div>
+                    </article>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
           <div className="cancellation">
             <div className="cancelHeader">
               <h4>Cancellation Policy</h4>
@@ -219,7 +221,6 @@ function CarDetails() {
 
 const Container = styled.section`
   padding: 0 1rem;
-  min-height: 82.3vh;
   .backLink {
     & > a {
       display: flex;
@@ -239,6 +240,9 @@ const Container = styled.section`
       border-radius: 0.3rem;
       height: 71vh;
       overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
       padding: 1rem;
       .carHeader {
         display: flex;
@@ -269,7 +273,6 @@ const Container = styled.section`
               display: flex;
               justify-content: center;
               align-items: center;
-              margin: 0;
               height: 2rem;
               border-radius: 0.3rem;
               color: #ffead0;
@@ -287,9 +290,6 @@ const Container = styled.section`
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            & > h2 {
-              margin: 0;
-            }
           }
           .carSmallDetails {
             display: grid;
@@ -298,16 +298,12 @@ const Container = styled.section`
             & > div {
               display: flex;
               gap: 0.3rem;
-              & > p {
-                margin: 0;
-              }
             }
           }
           .carPrice {
             display: flex;
             justify-content: space-between;
             & > p {
-              margin: 0;
               display: flex;
               flex-direction: column;
               font-size: 1.1rem;
@@ -339,6 +335,7 @@ const Container = styled.section`
       }
       .addedBenefits {
         & > div {
+          margin-top: 0.5rem;
           display: flex;
           flex-wrap: wrap;
           gap: 1rem;
@@ -350,9 +347,6 @@ const Container = styled.section`
             width: 15rem;
             flex-direction: column;
             gap: 0.5rem;
-            & > * {
-              margin: 0;
-            }
             & > p {
               text-align: justify;
             }
@@ -361,6 +355,7 @@ const Container = styled.section`
       }
       .carReviews {
         & > div {
+          margin-top: 0.5rem;
           display: flex;
           flex-wrap: wrap;
           gap: 1.5rem;
@@ -400,9 +395,10 @@ const Container = styled.section`
           }
         }
         .cancelDetails {
-          & > h5 {
-            margin: 0;
-          }
+          margin-top: 0.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
         }
       }
     }
@@ -422,9 +418,6 @@ const Container = styled.section`
         & > div {
           display: flex;
           justify-content: space-between;
-          & > h4 {
-            margin: 0;
-          }
           & > button {
             background: transparent;
             border: none;
@@ -448,15 +441,9 @@ const Container = styled.section`
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        & > * {
-          margin: 0;
-        }
         & > div {
           display: flex;
           justify-content: space-between;
-          & > * {
-            margin: 0;
-          }
         }
         & > button {
           align-self: center;

@@ -3,6 +3,9 @@ import Data from "../../data/data.json";
 import styled from "styled-components";
 
 function GeneralSection({ formData, handleChange }) {
+  const category = Data.filters.find(
+    (filter) => filter.filtername === "Car type"
+  ).types;
   return (
     <Cointainer className="generalInput">
       <input
@@ -32,7 +35,7 @@ function GeneralSection({ formData, handleChange }) {
         onChange={handleChange}
       >
         <option value="">Select a Category</option>
-        {Data.filters[0].types.map((filter) => {
+        {category.map((filter) => {
           return (
             <option key={filter.id} value={filter.name}>
               {filter.name}

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import EachCar from "../../components/cars/EachCar";
 import CarFilters from "../../components/cars/CarFilters";
 import { store } from "../../app/store.js";
@@ -12,30 +11,58 @@ store.dispatch(getAllCars());
 function Cars() {
   const cars = useSelector(selectAllCar);
   const [showFilters, setShowFilters] = useState(false);
+  const [searchCar, setSearchCar] = useState("");
+  const [selectedFilters, setSelectedFilters] = useState({
+    "Car type": [],
+    "Fuel type": [],
+    "Gear type": [],
+    Price: [],
+    "Air Condition": [],
+  });
   return (
     <Container>
       <h1>Explore our car options</h1>
       <div>
         <div className="maxFilters">
-          <CarFilters />
+          <CarFilters
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+          />
         </div>
         <div className="minFilters">
-          {showFilters && <CarFilters setShowFilters={setShowFilters} />}
+          {showFilters && (
+            <CarFilters
+              setShowFilters={setShowFilters}
+              selectedFilters={selectedFilters}
+              setSelectedFilters={setSelectedFilters}
+            />
+          )}
         </div>
         <div className="cars">
           <div className="carSearch">
-            <input type="search" placeholder="Search" />
+            <input
+              type="search"
+              name="search"
+              placeholder="Search"
+              value={searchCar}
+              onChange={(e) =>
+                setSearchCar(e.target.value.replace(/\s+/g, " "))
+              }
+            />
             <button onClick={() => setShowFilters(!showFilters)}>
               Show Filters
             </button>
           </div>
           <div className="allCars">
-            {cars.map((car) => {
-              return (
-                <Link to={`/cars/${car.carId}`} key={car.carId}>
-                  <EachCar car={car} />
-                </Link>
-              );
+            {(searchCar === ""
+              ? cars
+              : cars.filter((car) =>
+                  car.carName
+                    .toLowerCase()
+                    .includes(searchCar.toLowerCase().trim())
+                )
+            ).map((car) => {
+              return <EachCar car={car} key={car.carId} />;
             })}
           </div>
         </div>
@@ -45,14 +72,12 @@ function Cars() {
 }
 
 const Container = styled.section`
-  padding: 1rem 2rem;
+  padding: 0 2rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  & > h1 {
-    margin: 0;
-  }
   & > div {
+    padding-bottom: 1rem;
     display: flex;
     gap: 1rem;
     .minFilters {

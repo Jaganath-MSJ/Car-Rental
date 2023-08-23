@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Link, useActionData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toastOptionsError, toastOptionsSuccess } from "../utils/ToastOptions";
 import { loginApi } from "../utils/handleApi";
@@ -13,7 +13,7 @@ export async function loginAction({ request }) {
   const email = formData.get("email");
   const password = formData.get("password");
   if (email === "" || password === "") {
-    toast.error("Email or Password is required", toastOptionsError);
+    toast.warning("Email or Password is required", toastOptionsError);
     return false;
   }
   try {
@@ -63,7 +63,6 @@ function Login() {
         <p>
           Don't have an account? <Link to="/register">Create one now</Link>
         </p>
-        <ToastContainer />
       </div>
     </Cointainer>
   );

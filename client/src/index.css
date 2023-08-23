@@ -1,6 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
-  font-family: Inter,'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: Inter, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   background-color: #fff7ed;
   color: #161616;
   -webkit-font-smoothing: antialiased;
@@ -16,6 +21,7 @@ a {
   background-color: #252525;
   width: 0.7rem;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #e17654;
   border-radius: 1rem;

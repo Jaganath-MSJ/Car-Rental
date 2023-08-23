@@ -4,7 +4,7 @@ import styled from "styled-components";
 function Footer() {
   return (
     <Foot>
-      <p>@ 2023 Car Rental</p>
+      <p>&copy; 2023 Car Rental</p>
     </Foot>
   );
 }
@@ -14,6 +14,7 @@ const Foot = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 3rem;
   color: #aaaaaa;
 `;
 

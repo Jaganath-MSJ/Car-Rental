@@ -4,8 +4,11 @@ import { RxCross1 } from "react-icons/rx";
 import Data from "../../data/data.json";
 import CheckBox from "../CheckBox";
 
-function CarFilters({setShowFilters}) {
+function CarFilters({ setShowFilters, selectedFilters, setSelectedFilters }) {
   const FilterName = Data.filters;
+  const selectedCount = Object.values(selectedFilters).reduce((a, b) => {
+    return b.length > 0 ? a + 1 : a;
+  }, 0);
   return (
     <StyledCarFilters>
       <div className="closeFilters">
@@ -14,40 +17,34 @@ function CarFilters({setShowFilters}) {
       <div className="filterHeader">
         <h3>Filter By</h3>
         <p>
-          {1} filters applied.&nbsp;
-          <button>Clear All</button>
+          {selectedCount} filters applied.&nbsp;
+          <button
+            onClick={() =>
+              setSelectedFilters({
+                "Car type": [],
+                "Fuel type": [],
+                "Gear type": [],
+                Price: [],
+                "Air Condition": [],
+              })
+            }
+          >
+            Clear All
+          </button>
         </p>
       </div>
-      <div className="line" />
-      <CheckBox
-        name={FilterName[0]}
-        // filters={location}
-        // setFilters={setLocation}
-      />
-      <div className="line" />
-      <CheckBox
-        name={FilterName[1]}
-        // filters={company}
-        // setFilters={setCompany}
-      />
-      <div className="line" />
-      <CheckBox
-        name={FilterName[2]}
-        // filters={jobSource}
-        // setFilters={setJobSource}
-      />
-      <div className="line" />
-      <CheckBox
-        name={FilterName[3]}
-        // filters={experience}
-        // setFilters={setExperience}
-      />
-      <div className="line" />
-      <CheckBox
-        name={FilterName[4]}
-        // filters={education}
-        // setFilters={setEducation}
-      />
+      {FilterName.map((filter) => {
+        return (
+          <div key={filter.filtername}>
+            <div className="line" />
+            <CheckBox
+              currentFilter={filter}
+              selectedFilters={selectedFilters[filter.filtername]}
+              setSelectedFilters={setSelectedFilters}
+            />
+          </div>
+        );
+      })}
     </StyledCarFilters>
   );
 }
@@ -71,11 +68,8 @@ const StyledCarFilters = styled.section`
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 0.8rem 0;
-    & > h3 {
-      margin: 0;
-    }
+    gap: 0.5rem;
     & > p {
-      margin: 0;
       display: flex;
       justify-content: flex-end;
       & > button {

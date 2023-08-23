@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Form, redirect } from "react-router-dom";
 import styled from "styled-components";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toastOptionsError, toastOptionsSuccess } from "../utils/ToastOptions";
 import { registerApi } from "../utils/handleApi";
@@ -15,25 +15,25 @@ export async function registerAction({ request }) {
   const password = formData.get("password");
   const confirmPassword = formData.get("confirmPassword");
   if (name.trim().length < 3) {
-    toast.error("Name must be at least 3 characters long", toastOptionsError);
+    toast.warning("Name must be at least 3 characters long", toastOptionsError);
     return false;
   } else if (email === "") {
-    toast.error("Name must be at least 3 characters long", toastOptionsError);
+    toast.warning("Name must be at least 3 characters long", toastOptionsError);
     return false;
   } else if (phone === "") {
-    toast.error("Phone no is required", toastOptionsError);
+    toast.warning("Phone no is required", toastOptionsError);
     return false;
   } else if (city.trim() === "") {
-    toast.error("City is required", toastOptionsError);
+    toast.warning("City is required", toastOptionsError);
     return false;
   } else if (password.length < 8) {
-    toast.error(
+    toast.warning(
       "Password must be at least 8 characters long",
       toastOptionsError
     );
     return false;
   } else if (password !== confirmPassword) {
-    toast.error(
+    toast.warning(
       "Password do not match with Confirm Password",
       toastOptionsError
     );
@@ -101,7 +101,6 @@ function Regsiter() {
         <p>
           Already have an account? <Link to="/login">Login</Link>
         </p>
-        <ToastContainer />
       </div>
     </Cointainer>
   );

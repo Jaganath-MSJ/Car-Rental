@@ -24,6 +24,7 @@ import HostCarPrice from "./components/host/HostCarPrice";
 import HostCarPhoto from "./components/host/HostCarPhoto";
 import HostAddCar from "./pages/host/HostAddCar";
 import HostCarEdit from "./components/host/HostCarEdit";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   const router = createBrowserRouter(
@@ -33,6 +34,8 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="register" element={<Register />} action={registerAction} />
         <Route path="login" element={<Login />} action={loginAction} />
+
+        <Route path="profile" element={<Profile />}></Route>
 
         <Route path="cars">
           <Route index element={<Cars />} />
