@@ -31,7 +31,7 @@ function About() {
 }
 
 const Container = styled.section`
-  padding: 1.33rem 0;
+  /* padding: 1.3rem 0; */
   .aboutImg {
     display: flex;
     justify-content: center;

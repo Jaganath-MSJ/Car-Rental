@@ -90,7 +90,6 @@ function RatingBar({ totalRatings, starCount }) {
 
 const Cointainer = styled.section`
   padding: 1rem;
-  min-height: 71vh;
   display: flex;
   gap: 2rem;
   .header {
@@ -189,7 +188,8 @@ const Cointainer = styled.section`
   @media only screen and (max-width: 670px) {
     padding: 1rem 0;
     flex-direction: column;
-    .header, .review {
+    .header,
+    .review {
       width: 100%;
     }
   }

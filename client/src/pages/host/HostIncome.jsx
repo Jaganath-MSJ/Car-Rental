@@ -41,7 +41,6 @@ function HostIncome() {
 
 const Cointainer = styled.section`
   padding: 1rem;
-  min-height: 71vh;
   display: flex;
   gap: 2rem;
   .incomeGraph {

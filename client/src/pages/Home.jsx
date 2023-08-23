@@ -30,7 +30,6 @@ const Container = styled.section`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  min-height: 82.3vh;
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
