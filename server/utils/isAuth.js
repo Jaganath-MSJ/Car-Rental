@@ -1,6 +1,6 @@
 import pkg from "jsonwebtoken";
 import jwtDecode from "jwt-decode";
-import ROLE from "./Role.js";
+import ROLE from "./role.js";
 const { verify } = pkg;
 
 export const isAuth = (req) => {

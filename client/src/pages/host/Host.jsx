@@ -1,11 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Data from "../../data/data.json";
 import { AiFillStar } from "react-icons/ai";
 import HostEachCar from "../../components/host/HostEachCar";
-
+import { getCurrentUser } from "../../features/userSlice";
+import { selectCarsByUserId } from "../../features/carSlice";
 function Host() {
+  const { userId } = useSelector(getCurrentUser);
+  const hostCars = useSelector((state) => selectCarsByUserId(state, userId));
   return (
     <Cointainer>
       <div className="hostTop">
@@ -15,7 +18,7 @@ function Host() {
             <p>
               Income last <span>30 days</span>
             </p>
-            <h1>$29200</h1>
+            <h1>&#x20B9;29200</h1>
           </div>
           <div>
             <Link to="/host/income">Details</Link>
@@ -40,10 +43,10 @@ function Host() {
           <Link to="/host/cars">View all</Link>
         </div>
         <div className="sampleCars">
-          {Data.cars.slice(0, 2).map((car, index) => {
+          {hostCars.slice(0, 4).map((car) => {
             return (
-              <Link to={`/host/cars/${index}`} key={index}>
-                <HostEachCar hostCar={car} key={index} />
+              <Link to={`/host/cars/${car.carId}`} key={car.carId}>
+                <HostEachCar hostCar={car} />
               </Link>
             );
           })}

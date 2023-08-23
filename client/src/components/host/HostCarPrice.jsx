@@ -3,12 +3,12 @@ import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 function HostCarPrice() {
-  const car = useOutletContext();
+  const hostCar = useOutletContext();
 
   return (
     <Cointainer>
       <p>
-        <span>${car.price}</span>/day
+        <span>&#x20B9;{hostCar.rent}</span>/day
       </p>
     </Cointainer>
   );

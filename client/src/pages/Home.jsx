@@ -6,6 +6,16 @@ function Home() {
   return (
     <Container>
       <h1>You got the travel plans, we get the travel cars.</h1>
+      <div className="inputDate">
+        <div>
+          <label>From Date</label>
+          <input type="date" />
+        </div>
+        <div>
+          <label>To Date</label>
+          <input type="date" />
+        </div>
+      </div>
       <p>
         Add adventure to your life by joining the car movement. Rent the perfect
         car to make your perfect road trip.
@@ -30,6 +40,20 @@ const Container = styled.section`
   & > h1 {
     font-size: 3rem;
     text-align: center;
+  }
+  .inputDate {
+    display: flex;
+    gap: 2rem;
+    & > div {
+      display: flex;
+      gap: 0.5rem;
+      & > input {
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.2rem;
+        border: 1px solid #c2c2c2;
+        outline: none;
+      }
+    }
   }
   & > p {
     font-size: 1.2rem;

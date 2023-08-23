@@ -1,20 +1,24 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Data from "../../data/data.json";
 import { Link } from "react-router-dom";
 import HostEachCar from "../../components/host/HostEachCar";
+import { getCurrentUser } from "../../features/userSlice";
+import { selectCarsByUserId } from "../../features/carSlice";
 
 function HostCars() {
+  const { userId } = useSelector(getCurrentUser);
+  const hostCars = useSelector((state) => selectCarsByUserId(state, userId));
   return (
     <Cointainer>
       <div className="headerCars">
         <h2>Your listed cars</h2>
       </div>
       <div className="hostAllCars">
-        {Data.cars.slice(0, 6).map((car, index) => {
+        {hostCars.map((car) => {
           return (
-            <Link to={`/host/cars/${index}`} key={index}>
-              <HostEachCar hostCar={car} key={index} />
+            <Link to={`/host/cars/${car.carId}`} key={car.carId}>
+              <HostEachCar hostCar={car} />
             </Link>
           );
         })}

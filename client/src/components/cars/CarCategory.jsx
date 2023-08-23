@@ -11,7 +11,7 @@ const Category = styled.p`
   align-items: center;
   margin: 0;
   width: 6.5rem;
-  height: 2.3rem;
+  height: 2rem;
   border-radius: 0.3rem;
   color: #ffead0;
   &.Hatchback {
@@ -20,7 +20,7 @@ const Category = styled.p`
   &.Sedan {
     background-color: #161616;
   }
-  &.Mpv {
+  &.MPV {
     background-color: #115e59;
   }
 `;

@@ -5,11 +5,15 @@ function HostEachCar({ hostCar }) {
   return (
     <Article>
       <div className="carImage">
-        <img src={hostCar.img} alt={hostCar.name} draggable="false" />
+        <img
+          src={hostCar.carPhotos[0]}
+          alt={hostCar.carName}
+          draggable="false"
+        />
       </div>
       <div className="carName">
-        <h4>{hostCar.name}</h4>
-        <p>${hostCar.price}/day</p>
+        <h4>{hostCar.carName}</h4>
+        <p>&#x20B9;{hostCar.rent}/day</p>
       </div>
     </Article>
   );
@@ -22,8 +26,8 @@ const Article = styled.article`
   background-color: white;
   border-radius: 0.5rem;
   padding: 1rem;
-  width: 33rem;
-  height: 8rem;
+  width: max-content;
+  height: max-content;
   .carImage {
     & > img {
       width: 13rem;

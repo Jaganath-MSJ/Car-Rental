@@ -3,11 +3,11 @@ import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 function HostCarPhoto() {
-  const car = useOutletContext();
+  const hostCar = useOutletContext();
 
   return (
     <Cointainer>
-      {car.photos.map((photo, index) => {
+      {hostCar.carPhotos.map((photo, index) => {
         return <img src={photo} alt={index} key={index} />;
       })}
     </Cointainer>
@@ -19,7 +19,7 @@ const Cointainer = styled.section`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem 2rem;
-  &>img {
+  & > img {
     width: 10rem;
     height: 8rem;
     border-radius: 0.3rem;

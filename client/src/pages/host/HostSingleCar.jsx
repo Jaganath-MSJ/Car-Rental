@@ -1,13 +1,15 @@
 import React from "react";
-import { GoArrowLeft } from "react-icons/go";
+import { useSelector } from "react-redux";
 import { Link, NavLink, Outlet, useParams } from "react-router-dom";
 import styled from "styled-components";
-import Data from "../../data/data.json";
+import { GoArrowLeft } from "react-icons/go";
 import CarCategory from "../../components/cars/CarCategory";
+import { selectCarById } from "../../features/carSlice";
 
 function HostSingleCar() {
-  const { id } = useParams();
-  const car = Data.cars[id];
+  const { hostCarId } = useParams();
+  const hostCar = useSelector((state) => selectCarById(state, hostCarId));
+  if (!hostCar) return <div>Loading...</div>;
   return (
     <Cointainer>
       <div className="backLink">
@@ -19,11 +21,15 @@ function HostSingleCar() {
       <div className="carFullDetails">
         <section className="car">
           <div className="carImage">
-            <img src={car.img} alt={car.name} draggable="false" />
+            <img
+              src={hostCar.carPhotos[0]}
+              alt={hostCar.carName}
+              draggable="false"
+            />
           </div>
           <div className="carName">
-            <h2>{car.name}</h2>
-            <CarCategory category={car.category} />
+            <h2>{hostCar.carName}</h2>
+            <CarCategory category={hostCar.category} />
           </div>
         </section>
         <section className="other">
@@ -45,7 +51,7 @@ function HostSingleCar() {
               </li>
             </ul>
           </nav>
-          <Outlet context={car} />
+          <Outlet context={hostCar} />
         </section>
       </div>
     </Cointainer>
@@ -127,7 +133,7 @@ const Cointainer = styled.section`
       }
     }
   }
-  @media only screen and (max-width: 850px) {
+  @media only screen and (max-width: 1180px) {
     padding: 0.09rem 0;
     .carFullDetails {
       flex-direction: column;
