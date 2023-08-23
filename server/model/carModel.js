@@ -22,25 +22,44 @@ const carSchema = new mongoose.Schema({
   userId: {
     type: String,
   },
-  name: {
-    type: String,
-  },
-  category: {
+  carName: {
     type: String,
   },
   model: {
     type: String,
   },
-  price: {
+  carNumber: {
+    type: String,
+  },
+  category: {
+    type: String,
+  },
+  rent: {
     type: String,
   },
   description: {
     type: String,
   },
-  isAvaiable: {
+  noOfSeats: {
+    type: String,
+  },
+  mileage: {
+    type: String,
+  },
+  fuelType: {
+    type: String,
+  },
+  gearType: {
+    type: String,
+  },
+  airCondition: {
     type: Boolean,
   },
-  photos: [{ type: String }],
+  carPhotos: [{ type: String }],
+  isAvaiable: {
+    type: Boolean,
+    default: true,
+  },
   postedOn: {
     type: String,
   },

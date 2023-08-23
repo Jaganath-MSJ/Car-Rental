@@ -14,7 +14,7 @@ function HostIncome() {
           </p>
         </header>
         <div>
-          <h1>$29200</h1>
+          <h1>&#x20B9;29200</h1>
         </div>
       </div>
       <div className="trancactions">
@@ -28,7 +28,7 @@ function HostIncome() {
           {Data.transactions.map((transaction, index) => {
             return (
               <article key={index}>
-                <div className="transPrice">${transaction.price}</div>
+                <div className="transPrice">&#x20B9;{transaction.price}</div>
                 <div className="transDate">{formatDate2(transaction.date)}</div>
               </article>
             );
@@ -108,7 +108,8 @@ const Cointainer = styled.section`
   @media only screen and (max-width: 768px) {
     flex-direction: column;
     padding: 1rem 0;
-    .incomeGraph, .trancactions {
+    .incomeGraph,
+    .trancactions {
       width: 100%;
     }
   }

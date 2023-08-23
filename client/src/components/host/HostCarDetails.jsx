@@ -3,17 +3,17 @@ import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 function HostCarDetails() {
-  const car = useOutletContext();
+  const hostCar = useOutletContext();
   return (
     <Cointainer>
       <p>
-        <span>Name:</span> {car.name}
+        <span>Name:</span> {hostCar.carName}
       </p>
       <p>
-        <span>Category:</span> {car.category}
+        <span>Category:</span> {hostCar.category}
       </p>
       <p>
-        <span>Description:</span> {car.description}
+        <span>Description:</span> {hostCar.description}
       </p>
     </Cointainer>
   );

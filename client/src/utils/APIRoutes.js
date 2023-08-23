@@ -8,3 +8,6 @@ export const isUserAuthRoute = `${host}/auth/isUserAuth`;
 export const refreshTokenRoute = `${host}/auth/refresh_token`;
 export const getAllUsersRoute = `${host}/auth/getAllUsers`;
 export const getUserRoute = `${host}/auth/getUser`;
+
+export const getAllCarsRoute = `${host}/car/getAllCars`;
+export const addCarRoute = `${host}/car/addCar`;

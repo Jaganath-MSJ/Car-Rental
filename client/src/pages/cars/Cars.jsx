@@ -1,33 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Data from "../../data/data.json";
 import EachCar from "../../components/cars/EachCar";
+import CarFilters from "../../components/cars/CarFilters";
+import { store } from "../../app/store.js";
+import { getAllCars, selectAllCar } from "../../features/carSlice";
+import { useSelector } from "react-redux";
+
+store.dispatch(getAllCars());
 
 function Cars() {
+  const cars = useSelector(selectAllCar);
+  const [showFilters, setShowFilters] = useState(false);
   return (
     <Container>
-      <div className="carsHeader">
-        <h1>Explore our car options</h1>
-        <div>
-          {Data.filters.map((filter) => {
-            return (
-              <button className={filter} key={filter}>
-                {filter}
-              </button>
-            );
-          })}
-          <p>Clear filters</p>
+      <h1>Explore our car options</h1>
+      <div>
+        <div className="maxFilters">
+          <CarFilters />
         </div>
-      </div>
-      <div className="allCars">
-        {Data.cars.map((car, index) => {
-          return (
-            <Link to={`/cars/${index}`} key={car.name}>
-              <EachCar car={car} />
-            </Link>
-          );
-        })}
+        <div className="minFilters">
+          {showFilters && <CarFilters setShowFilters={setShowFilters} />}
+        </div>
+        <div className="cars">
+          <div className="carSearch">
+            <input type="search" placeholder="Search" />
+            <button onClick={() => setShowFilters(!showFilters)}>
+              Show Filters
+            </button>
+          </div>
+          <div className="allCars">
+            {cars.map((car) => {
+              return (
+                <Link to={`/cars/${car.carId}`} key={car.carId}>
+                  <EachCar car={car} />
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </Container>
   );
@@ -39,53 +50,64 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  .carsHeader {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-    & > h1 {
-      margin: 0;
-    }
-    & > div {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      & > button {
-        background-color: #ffead0;
-        color: #4d4d4d;
-        border: none;
-        width: 7rem;
-        height: 2rem;
-        border-radius: 0.3rem;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-      }
-      .Hatchback:hover {
-        background-color: #e17654;
-        color: #ffead0;
-      }
-      .Sedan:hover {
-        background-color: #161616;
-        color: #ffead0;
-      }
-      .Mpv:hover {
-        background-color: #115e59;
-        color: #ffead0;
-      }
-      & > p {
-        text-decoration: underline;
-        text-underline-offset: 0.2rem;
-        margin: 0;
-        color: #4d4d4d;
-        cursor: pointer;
-      }
-    }
+  & > h1 {
+    margin: 0;
   }
-  .allCars {
+  & > div {
     display: flex;
-    flex-wrap: wrap;
-    gap: 2rem 3rem;
+    gap: 1rem;
+    .minFilters {
+      display: none;
+    }
+    .cars {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      .carSearch {
+        & > input {
+          outline: none;
+          width: 100%;
+          color: #4d4d4d;
+          padding: 0.5rem 0.8rem;
+          border: 1px solid #c2c2c2;
+          border-radius: 0.2rem;
+        }
+        & > button {
+          display: none;
+        }
+      }
+      .allCars {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem 3rem;
+      }
+    }
+    @media screen and (max-width: 850px) {
+      .maxFilters {
+        display: none;
+      }
+      .minFilters {
+        display: block;
+        position: absolute;
+        top: 5rem;
+      }
+      .cars {
+        width: 100%;
+        .carSearch {
+          display: flex;
+          gap: 0.5rem;
+          & > button {
+            display: block;
+            background-color: #ffead0;
+            border-radius: 0.3rem;
+            border: none;
+            outline: none;
+            padding: 0.2rem;
+          }
+        }
+      }
+    }
   }
 `;
 

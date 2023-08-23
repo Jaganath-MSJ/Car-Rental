@@ -1,10 +1,12 @@
 import React from "react";
-import { Form, Link, redirect } from "react-router-dom";
+import { Form, Link, useActionData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toastOptionsError, toastOptionsSuccess } from "../utils/ToastOptions";
 import { loginApi } from "../utils/handleApi";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../features/userSlice";
 
 export async function loginAction({ request }) {
   const formData = await request.formData();
@@ -16,19 +18,29 @@ export async function loginAction({ request }) {
   }
   try {
     const data = await loginApi({ email, password });
-    if (data.status) {
+    if (data.status && data.accessToken) {
       toast.success(data.msg, toastOptionsSuccess);
-      return redirect("/cars");
-    } else {
+      return data;
+    } else if (!data.status) {
       toast.error(data.msg, toastOptionsError);
+    } else {
+      toast.error("Something went wrong!", toastOptionsError);
     }
   } catch (err) {
+    console.log(err.message);
     toast.error("Something went wrong", toastOptionsError);
   }
   return null;
 }
 
 function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const data = useActionData();
+  if (data?.accessToken) {
+    dispatch(setCurrentUser(data.accessToken));
+    navigate("/");
+  }
   return (
     <Cointainer>
       <div>

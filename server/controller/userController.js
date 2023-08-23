@@ -31,7 +31,7 @@ export const register = async (req, res, next) => {
     return res.send({ status: true, msg: "Account created successfully" });
   } catch (err) {
     next(err);
-    return res.status(400).send({ msg: "Can't create accound" });
+    return res.status(400).send({ msg: "Can't create account" });
   }
 };
 

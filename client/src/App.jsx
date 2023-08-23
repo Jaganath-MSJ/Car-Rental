@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Route,
   RouterProvider,
@@ -35,7 +36,7 @@ function App() {
 
         <Route path="cars">
           <Route index element={<Cars />} />
-          <Route path=":id" element={<CarDetails />} />
+          <Route path=":carId" element={<CarDetails />} />
         </Route>
 
         <Route path="host" element={<HostNav />}>
@@ -45,7 +46,7 @@ function App() {
           <Route path="cars">
             <Route index element={<HostCars />} />
 
-            <Route path=":id" element={<HostSingleCar />}>
+            <Route path=":hostCarId" element={<HostSingleCar />}>
               <Route index element={<HostCarDetails />} />
               <Route path="price" element={<HostCarPrice />} />
               <Route path="photo" element={<HostCarPhoto />} />

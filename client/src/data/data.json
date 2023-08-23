@@ -1,5 +1,4 @@
 {
-  "filters": ["Hatchback", "Sedan", "Mpv"],
   "cars": [
     {
       "img": "/assets/cars/baleno.jpg",
@@ -20,7 +19,15 @@
         "/assets/cars/ertiga.jpg",
         "/assets/cars/innova.jpg",
         "/assets/cars/kia.jpg"
-      ]
+      ],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/i10_nios.jpg",
@@ -28,7 +35,15 @@
       "category": "Hatchback",
       "description": "A car hatchback is a versatile and compact vehicle type that features a rear door, typically hinged at the top, which provides access to a cargo area. This design allows for efficient use of space and easy loading and unloading of goods. Hatchbacks are known for their practicality, offering a balance between passenger comfort and storage capacity. They are often chosen for urban driving due to their maneuverability and fuel efficiency. With a rear seat that can be folded down, hatchbacks offer additional storage flexibility, making them an ideal choice for a wide range of lifestyles and needs.",
       "price": 5500,
-      "photos": ["/assets/cars/i10_nios.jpg"]
+      "photos": ["/assets/cars/i10_nios.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/swift.jpg",
@@ -36,7 +51,15 @@
       "category": "Hatchback",
       "description": "A car hatchback is a versatile and compact vehicle type that features a rear door, typically hinged at the top, which provides access to a cargo area. This design allows for efficient use of space and easy loading and unloading of goods. Hatchbacks are known for their practicality, offering a balance between passenger comfort and storage capacity.",
       "price": 5700,
-      "photos": ["/assets/cars/swift.jpg"]
+      "photos": ["/assets/cars/swift.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/jazz.jpg",
@@ -44,7 +67,15 @@
       "category": "Hatchback",
       "description": "A car hatchback is a versatile and compact vehicle type that features a rear door, typically hinged at the top, which provides access to a cargo area. This design allows for efficient use of space and easy loading and unloading of goods. Hatchbacks are known for their practicality, offering a balance between passenger comfort and storage capacity. They are often chosen for urban driving due to their maneuverability and fuel efficiency. With a rear seat that can be folded down, hatchbacks offer additional storage flexibility, making them an ideal choice for a wide range of lifestyles and needs.",
       "price": 4900,
-      "photos": ["/assets/cars/jazz.jpg"]
+      "photos": ["/assets/cars/jazz.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/dzire.jpg",
@@ -52,7 +83,15 @@
       "category": "Sedan",
       "description": "A sedan is a classic automobile body style characterized by its four doors, separate compartments for passengers and cargo, and a closed roof. Known for its sleek and elegant design, a sedan offers comfortable seating for multiple passengers while maintaining a refined appearance.",
       "price": 6000,
-      "photos": ["/assets/cars/dzire.jpg"]
+      "photos": ["/assets/cars/dzire.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/verna.jpg",
@@ -60,7 +99,15 @@
       "category": "Sedan",
       "description": "A sedan is a classic automobile body style characterized by its four doors, separate compartments for passengers and cargo, and a closed roof. Known for its sleek and elegant design, a sedan offers comfortable seating for multiple passengers while maintaining a refined appearance. With a focus on practicality, sedans often provide a balanced blend of performance, fuel efficiency, and safety features, making them a popular choice for daily commuting and family transportation.",
       "price": 6400,
-      "photos": ["/assets/cars/verna.jpg"]
+      "photos": ["/assets/cars/verna.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/city.jpg",
@@ -68,7 +115,15 @@
       "category": "Sedan",
       "description": "A sedan is a classic automobile body style characterized by its four doors, separate compartments for passengers and cargo, and a closed roof. Known for its sleek and elegant design, a sedan offers comfortable seating for multiple passengers while maintaining a refined appearance.",
       "price": 6600,
-      "photos": ["/assets/cars/city.jpg"]
+      "photos": ["/assets/cars/city.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/virtus.jpg",
@@ -76,7 +131,15 @@
       "category": "Sedan",
       "description": "A sedan is a classic automobile body style characterized by its four doors, separate compartments for passengers and cargo, and a closed roof. Known for its sleek and elegant design, a sedan offers comfortable seating for multiple passengers while maintaining a refined appearance. With a focus on practicality, sedans often provide a balanced blend of performance, fuel efficiency, and safety features, making them a popular choice for daily commuting and family transportation.",
       "price": 6100,
-      "photos": ["/assets/cars/virtus.jpg"]
+      "photos": ["/assets/cars/virtus.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/xuv700.jpg",
@@ -84,7 +147,15 @@
       "category": "Mpv",
       "description": "A Multi-Purpose Vehicle (MPV) is a versatile and spacious automobile designed to accommodate multiple passengers and cargo. Combining the practicality of a minivan with the driving dynamics of a sedan, MPVs offer a comfortable and flexible solution for families, group travel, and diverse lifestyle needs.",
       "price": 7200,
-      "photos": ["/assets/cars/xuv700.jpg"]
+      "photos": ["/assets/cars/xuv700.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/ertiga.jpg",
@@ -92,7 +163,15 @@
       "category": "Mpv",
       "description": "A Multi-Purpose Vehicle (MPV) is a versatile and spacious automobile designed to accommodate multiple passengers and cargo. Combining the practicality of a minivan with the driving dynamics of a sedan, MPVs offer a comfortable and flexible solution for families, group travel, and diverse lifestyle needs. With ample seating capacity, customizable interior configurations, and often advanced entertainment and safety features, MPVs cater to a wide range of transportation requirements, making them a popular choice for those seeking a balance between functionality and comfort.",
       "price": 7000,
-      "photos": ["/assets/cars/ertiga.jpg"]
+      "photos": ["/assets/cars/ertiga.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/innova.jpg",
@@ -100,7 +179,15 @@
       "category": "Mpv",
       "description": "A Multi-Purpose Vehicle (MPV) is a versatile and spacious automobile designed to accommodate multiple passengers and cargo. Combining the practicality of a minivan with the driving dynamics of a sedan, MPVs offer a comfortable and flexible solution for families, group travel, and diverse lifestyle needs.",
       "price": 7400,
-      "photos": ["/assets/cars/innova.jpg"]
+      "photos": ["/assets/cars/innova.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     },
     {
       "img": "/assets/cars/kia.jpg",
@@ -108,7 +195,15 @@
       "category": "Mpv",
       "description": "A Multi-Purpose Vehicle (MPV) is a versatile and spacious automobile designed to accommodate multiple passengers and cargo. Combining the practicality of a minivan with the driving dynamics of a sedan, MPVs offer a comfortable and flexible solution for families, group travel, and diverse lifestyle needs. With ample seating capacity, customizable interior configurations, and often advanced entertainment and safety features, MPVs cater to a wide range of transportation requirements, making them a popular choice for those seeking a balance between functionality and comfort.",
       "price": 7800,
-      "photos": ["/assets/cars/kia.jpg"]
+      "photos": ["/assets/cars/kia.jpg"],
+      "fuel": "Petrol",
+      "pick": "Top Pick",
+      "seats": 4,
+      "gear": "Gear Manual",
+      "kmperhr": 20,
+      "conditional": "AC-conditional",
+      "reviews": 4.5,
+      "trips": 25
     }
   ],
   "reviews": [
@@ -147,6 +242,87 @@
     {
       "price": 6700,
       "date": "2023-08-08T09:43:50.231Z"
+    }
+  ],
+  "filters": [
+    {
+      "filtername": "Car type",
+      "types": [
+        {
+          "id": 1,
+          "name": "Hatchback"
+        },
+        {
+          "id": 2,
+          "name": "Sedan"
+        },
+        {
+          "id": 3,
+          "name": "MPV"
+        }
+      ]
+    },
+    {
+      "filtername": "Fuel type",
+      "types": [
+        {
+          "id": 1,
+          "name": "Petrol"
+        },
+        {
+          "id": 2,
+          "name": "Disel"
+        },
+        {
+          "id": 3,
+          "name": "Electric"
+        }
+      ]
+    },
+    {
+      "filtername": "Gear type",
+      "types": [
+        {
+          "id": 1,
+          "name": "Manual"
+        },
+        {
+          "id": 2,
+          "name": "Auto"
+        }
+      ]
+    },
+    {
+      "filtername": "Price",
+      "types": [
+        {
+          "id": 1,
+          "name": "Rs.2500 below"
+        },
+        {
+          "id": 2,
+          "name": "Rs.2500-Rs.5000"
+        },
+        {
+          "id": 3,
+          "name": "Rs.5000 above"
+        }
+      ]
+    },
+    {
+      "filtername": "Air Condition",
+      "types": [
+        {
+          "id": 1,
+          "name": "Yes",
+          "value": true
+        },
+        {
+          "id": 2,
+          "name": "No",
+          "value": false
+        }
+      ]
     }
   ]
 }
