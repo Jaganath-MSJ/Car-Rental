@@ -40,7 +40,7 @@ function HostIncome() {
 }
 
 const Cointainer = styled.section`
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   display: flex;
   gap: 2rem;
   .incomeGraph {
@@ -52,10 +52,6 @@ const Cointainer = styled.section`
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      & > h1 {
-        margin: 0;
-        font-size: 1.7rem;
-      }
       & > p {
         & > span {
           text-decoration: underline;
@@ -65,7 +61,6 @@ const Cointainer = styled.section`
     }
     & > div {
       & > h1 {
-        margin: 0;
         font-size: 1.7rem;
       }
     }
@@ -84,6 +79,7 @@ const Cointainer = styled.section`
       }
     }
     .allTrans {
+      margin-top: 1rem;
       display: flex;
       flex-direction: column;
       gap: 2rem;

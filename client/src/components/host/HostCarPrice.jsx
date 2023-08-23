@@ -15,9 +15,9 @@ function HostCarPrice() {
 }
 
 const Cointainer = styled.section`
+  padding-top: 1.5rem;
   padding-right: 2rem;
   & > p {
-    margin: 0;
     font-size: 1.4rem;
     & > span {
       font-weight: bold;

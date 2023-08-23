@@ -250,15 +250,18 @@
       "types": [
         {
           "id": 1,
-          "name": "Hatchback"
+          "name": "Hatchback",
+          "value": "Hatchback"
         },
         {
           "id": 2,
-          "name": "Sedan"
+          "name": "Sedan",
+          "value": "Sedan"
         },
         {
           "id": 3,
-          "name": "MPV"
+          "name": "MPV",
+          "value": "MPV"
         }
       ]
     },
@@ -267,15 +270,18 @@
       "types": [
         {
           "id": 1,
-          "name": "Petrol"
+          "name": "Petrol",
+          "value": "Petrol"
         },
         {
           "id": 2,
-          "name": "Disel"
+          "name": "Disel",
+          "value": "Disel"
         },
         {
           "id": 3,
-          "name": "Electric"
+          "name": "Electric",
+          "value": "Electric"
         }
       ]
     },
@@ -284,11 +290,13 @@
       "types": [
         {
           "id": 1,
-          "name": "Manual"
+          "name": "Manual",
+          "value": "Manual"
         },
         {
           "id": 2,
-          "name": "Auto"
+          "name": "Auto",
+          "value": "Auto"
         }
       ]
     },
@@ -297,15 +305,18 @@
       "types": [
         {
           "id": 1,
-          "name": "Rs.2500 below"
+          "name": "Rs.2500 below",
+          "value": "Rs.2500 below"
         },
         {
           "id": 2,
-          "name": "Rs.2500-Rs.5000"
+          "name": "Rs.2500-Rs.5000",
+          "value": "Rs.2500-Rs.5000"
         },
         {
           "id": 3,
-          "name": "Rs.5000 above"
+          "name": "Rs.5000 above",
+          "value": "Rs.5000 above"
         }
       ]
     },

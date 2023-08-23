@@ -28,10 +28,9 @@ function HostCars() {
 }
 
 const Cointainer = styled.section`
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   .headerCars {
     & > h2 {
-      margin: 0;
       margin-bottom: 1rem;
       font-size: 1.7rem;
     }

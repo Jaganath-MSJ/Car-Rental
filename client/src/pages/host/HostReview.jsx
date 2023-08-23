@@ -89,7 +89,7 @@ function RatingBar({ totalRatings, starCount }) {
 }
 
 const Cointainer = styled.section`
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   display: flex;
   gap: 2rem;
   .header {
@@ -102,7 +102,6 @@ const Cointainer = styled.section`
       align-items: center;
       gap: 0.5rem;
       & > h1 {
-        margin: 0;
         font-size: 1.7rem;
       }
       & > p {
@@ -117,9 +116,6 @@ const Cointainer = styled.section`
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        & > * {
-          margin: 0;
-        }
         & > p > svg {
           color: #ff8c38;
         }
@@ -133,9 +129,6 @@ const Cointainer = styled.section`
           display: flex;
           align-items: center;
           gap: 1rem;
-          & > p {
-            margin: 0;
-          }
           .rating-bar {
             width: 70%;
             display: flex;
@@ -160,6 +153,7 @@ const Cointainer = styled.section`
   .review {
     width: 50%;
     .allReviews {
+      margin-top: 1rem;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;

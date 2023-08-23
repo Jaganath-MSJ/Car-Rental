@@ -41,11 +41,9 @@ const Article = styled.article`
     flex-direction: column;
     gap: 1rem;
     & > h4 {
-      margin: 0;
       font-size: 1.5rem;
     }
     & > p {
-      margin: 0;
       font-size: 1.2rem;
     }
   }

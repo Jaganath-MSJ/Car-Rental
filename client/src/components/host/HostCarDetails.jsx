@@ -20,7 +20,11 @@ function HostCarDetails() {
 }
 
 const Cointainer = styled.section`
+  padding-top: 1.5rem;
   padding-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   & > p {
     text-align: justify;
     & > span {

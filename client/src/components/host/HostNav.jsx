@@ -53,9 +53,6 @@ const Cointainer = styled.section`
         }
       }
     }
-    & > section {
-      min-height: 70vh;
-    }
   }
   @media only screen and (max-width: 420px) {
     padding: 0 1rem;

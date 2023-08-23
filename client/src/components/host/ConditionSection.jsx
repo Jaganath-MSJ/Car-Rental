@@ -3,6 +3,15 @@ import Data from "../../data/data.json";
 import styled from "styled-components";
 
 function ConditionSection({ formData, handleChange }) {
+  const fuelType = Data.filters.find(
+    (filter) => filter.filtername === "Fuel type"
+  ).types;
+  const gearType = Data.filters.find(
+    (filter) => filter.filtername === "Gear type"
+  ).types;
+  const airCondition = Data.filters.find(
+    (filter) => filter.filtername === "Air Condition"
+  ).types;
   return (
     <Cointainer className="conditionInput">
       <input
@@ -25,7 +34,7 @@ function ConditionSection({ formData, handleChange }) {
         onChange={handleChange}
       >
         <option value="">Select a Fuel Type</option>
-        {Data.filters[1].types.map((filter) => {
+        {fuelType.map((filter) => {
           return (
             <option key={filter.id} value={filter.name}>
               {filter.name}
@@ -39,7 +48,7 @@ function ConditionSection({ formData, handleChange }) {
         onChange={handleChange}
       >
         <option value="">Select a Gear Type</option>
-        {Data.filters[2].types.map((filter) => {
+        {gearType.map((filter) => {
           return (
             <option key={filter.id} value={filter.name}>
               {filter.name}
@@ -53,7 +62,7 @@ function ConditionSection({ formData, handleChange }) {
         onChange={handleChange}
       >
         <option value="">Select is Air Condition</option>
-        {Data.filters[4].types.map((filter) => {
+        {airCondition.map((filter) => {
           return (
             <option key={filter.id} value={filter.value}>
               {filter.name}

@@ -71,6 +71,9 @@ const PopUp = styled.section`
     height: max-content;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     & > button {
       position: absolute;
       top: 1rem;
@@ -85,7 +88,6 @@ const PopUp = styled.section`
       }
     }
     & > h2 {
-      margin: 0;
       margin-bottom: 0.8rem;
     }
     .ownerDetails {
@@ -95,9 +97,6 @@ const PopUp = styled.section`
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      & > * {
-        margin: 0;
-      }
       & > h4 {
         font-size: 1.3rem;
         font-weight: 400;

@@ -15,6 +15,7 @@ function HostCarPhoto() {
 }
 
 const Cointainer = styled.section`
+  padding-top: 1.5rem;
   padding-right: 2rem;
   display: flex;
   flex-wrap: wrap;

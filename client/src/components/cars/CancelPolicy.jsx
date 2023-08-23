@@ -41,6 +41,9 @@ const PopUp = styled.section`
     height: max-content;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     & > button {
       position: absolute;
       top: 1rem;
@@ -54,8 +57,8 @@ const PopUp = styled.section`
         color: red;
       }
     }
-    & > h4 {
-      margin: 0;
+    p {
+      text-align: justify;
     }
   }
 `;

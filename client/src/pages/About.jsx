@@ -8,7 +8,7 @@ function About() {
       <div className="aboutImg">
         <img src="/assets/about.jpg" alt="about" draggable="false" />
       </div>
-      <div>
+      <div className="about">
         <div className="aboutDetails">
           <h1>Don’t squeeze in a sedan when you could relax in a car.</h1>
           <p>
@@ -31,8 +31,8 @@ function About() {
 }
 
 const Container = styled.section`
-  /* padding: 1.3rem 0; */
   .aboutImg {
+    padding: 1rem 0;
     display: flex;
     justify-content: center;
     overflow-x: hidden;
@@ -42,13 +42,17 @@ const Container = styled.section`
       border-radius: 0.3rem;
     }
   }
-  & > div {
+  .about {
+    padding-bottom: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0 1rem;
+    gap: 1.5rem;
     .aboutDetails {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
       & > h1 {
         font-size: 2rem;
         text-align: justify;
@@ -65,7 +69,6 @@ const Container = styled.section`
       flex-direction: column;
       gap: 2rem;
       & > h2 {
-        margin: 0;
         text-align: justify;
       }
       & > a {

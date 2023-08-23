@@ -5,12 +5,15 @@ import { MdOutlineAirlineSeatReclineNormal } from "react-icons/md";
 import { BsGearFill, BsSpeedometer2, BsFillBookmarkFill } from "react-icons/bs";
 import { TbAirConditioning } from "react-icons/tb";
 import CarCategory from "./CarCategory";
+import { Link } from "react-router-dom";
 
 function EachCar({ car }) {
   return (
     <Car>
       <div className="carImage">
-        <img src={car.carPhotos[0]} alt={car.carName} draggable="false" />
+        <Link to={`/cars/${car.carId}`}>
+          <img src={car.carPhotos[0]} alt={car.carName} draggable="false" />
+        </Link>
         <div>
           <p>
             <AiFillStar /> {4.5}/5 reviews
@@ -47,6 +50,7 @@ function EachCar({ car }) {
         </div>
         <div className="carPrice">
           <p>&#x20B9;{car.rent}/day</p>
+          <Link to={`/cars/${car.carId}`}>View All Details</Link>
           <BsFillBookmarkFill />
         </div>
       </div>
@@ -62,7 +66,7 @@ const Car = styled.article`
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    & > img {
+    & img {
       width: 15rem;
       height: 10rem;
       border-radius: 0.5rem;
@@ -72,7 +76,6 @@ const Car = styled.article`
       display: flex;
       gap: 1rem;
       & > p {
-        margin: 0;
         & > svg {
           color: #ff8c38;
         }
@@ -92,7 +95,6 @@ const Car = styled.article`
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0;
         height: 2rem;
         border-radius: 0.3rem;
         color: #ffead0;
@@ -110,9 +112,6 @@ const Car = styled.article`
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      & > h2 {
-        margin: 0;
-      }
     }
     .carSmallDetails {
       display: grid;
@@ -121,20 +120,26 @@ const Car = styled.article`
       & > div {
         display: flex;
         gap: 0.3rem;
-        & > p {
-          margin: 0;
-        }
       }
     }
     .carPrice {
       display: flex;
       justify-content: space-between;
       & > p {
-        margin: 0;
         display: flex;
         flex-direction: column;
         font-size: 1.1rem;
         font-weight: bold;
+      }
+      & > a {
+        background-color: #ff8c38;
+        color: #fff7ed;
+        padding: 0.3rem 0.5rem;
+        border-radius: 0.3rem;
+        &:hover {
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+          color: #161616;
+        }
       }
       & > svg {
         color: gray;

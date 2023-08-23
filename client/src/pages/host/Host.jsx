@@ -57,7 +57,10 @@ function Host() {
 }
 
 const Cointainer = styled.section`
-  padding: 1rem;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   .hostTop {
     display: flex;
     gap: 2rem;
@@ -72,9 +75,6 @@ const Cointainer = styled.section`
         display: flex;
         flex-direction: column;
         gap: 0.9rem;
-        & > * {
-          margin: 0;
-        }
         & > p {
           color: #4d4d4d;
           & > span {

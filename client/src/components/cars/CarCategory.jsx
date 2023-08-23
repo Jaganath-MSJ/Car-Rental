@@ -9,7 +9,6 @@ const Category = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0;
   width: 6.5rem;
   height: 2rem;
   border-radius: 0.3rem;

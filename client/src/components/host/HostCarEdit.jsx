@@ -1,20 +1,23 @@
 import React, { useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
-import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import {
-//   toastOptionsError,
-//   toastOptionsSuccess,
-// } from "../../utils/ToastOptions";
+import {
+  toastOptionsError,
+  toastOptionsSuccess,
+} from "../../utils/ToastOptions";
 import GeneralSection from "../../components/host/GeneralSection";
 import ConditionSection from "../../components/host/ConditionSection";
 import ProofSection from "../../components/host/ProofSection";
+import { updateCar } from "../../features/carSlice";
+import { getCurrentUser } from "../../features/userSlice";
 
 function HostCarEdit() {
+  const [addCarRequest, setAddCarRequest] = useState("idle");
   const hostCar = useOutletContext();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const mileStoneValue = ["General", "Condition", "Proof"];
   const [mileStone, setMileStone] = useState(0);
   const [formData, setFormData] = useState({
@@ -22,22 +25,91 @@ function HostCarEdit() {
     carPhotos: [],
   });
   const [selectedFiles, setSelectedFiles] = useState(hostCar.carPhotos);
+  const { accessToken } = useSelector(getCurrentUser);
 
   const handleChange = (e) => {
     e.preventDefault();
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    let newValue = e.target.value.replace(/\s+/g, " ");
+    if (["rent", "noOfSeats", "mileage"].includes(e.target.name)) {
+      newValue = newValue.replace(/\D/g, "").trim();
+    }
+    if (e.target.name === "carNumber") {
+      newValue = newValue.toUpperCase().trim();
+    }
+    setFormData({
+      ...formData,
+      [e.target.name]: newValue,
+    });
   };
 
   const handleUpload = (e) => {
     e.preventDefault();
     setFormData((prevData) => ({
       ...prevData,
-      carPhotos: [...prevData.carPhotos, ...selectedFiles],
+      carPhotos: [...selectedFiles],
     }));
+  };
+
+  const handleValidate = () => {
+    if (
+      !formData.carName ||
+      !formData.model ||
+      !formData.carNumber ||
+      !formData.category ||
+      !formData.rent ||
+      !formData.description ||
+      !formData.noOfSeats ||
+      !formData.mileage ||
+      !formData.fuelType ||
+      !formData.gearType ||
+      !formData.airCondition
+    ) {
+      toast.warning("Please fill all the fields", toastOptionsError);
+      return false;
+    } else if (formData.carPhotos.length < 1 && selectedFiles.length > 1) {
+      toast.warning("Please click on upload images", toastOptionsError);
+      return false;
+    } else if (selectedFiles.length < 1) {
+      toast.warning("Please upload at least one photo", toastOptionsError);
+      return false;
+    }
+    return true;
   };
 
   const handleAddCar = async (e) => {
     e.preventDefault();
+    try {
+      if (handleValidate() && addCarRequest === "idle") {
+        setAddCarRequest("pending");
+        dispatch(
+          updateCar({
+            details: {
+              carId: hostCar.carId,
+              carName: formData.carName.trim(),
+              model: formData.model.trim(),
+              carNumber: formData.carNumber.trim(),
+              category: formData.category,
+              rent: formData.rent,
+              description: formData.description.trim(),
+              noOfSeats: formData.noOfSeats,
+              mileage: formData.mileage,
+              fuelType: formData.fuelType,
+              gearType: formData.gearType,
+              airCondition: formData.airCondition,
+              carPhotos: formData.carPhotos,
+            },
+            token: accessToken,
+          })
+        );
+        setFormData({});
+        setSelectedFiles([]);
+        toast.success("Car updated successfully", toastOptionsSuccess);
+        setAddCarRequest("idle");
+      }
+    } catch (err) {
+      toast.error("Something went wrong", toastOptionsError);
+      setAddCarRequest("idle");
+    }
   };
 
   return (
@@ -77,13 +149,13 @@ function HostCarEdit() {
           <button onClick={() => setMileStone(mileStone + 1)}>Next</button>
         )}
       </div>
-      <ToastContainer />
     </Cointainer>
   );
 }
 
 const Cointainer = styled.section`
   padding: 1rem 2rem;
+  padding-top: 1.5rem;
   min-height: 52vh;
   display: flex;
   flex-direction: column;
@@ -113,13 +185,7 @@ const Cointainer = styled.section`
     display: flex;
     justify-content: center;
     gap: 2rem 4rem;
-    @media screen and (max-width: 520px) {
-      .generalInput,
-      .conditionInput,
-      .proofInput {
-        width: 100%;
-      }
-    }
+    width: 100%;
   }
   .changeMileStone {
     display: flex;
@@ -135,6 +201,23 @@ const Cointainer = styled.section`
       height: 1.8rem;
       font-size: 1rem;
       cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 520px) {
+    padding: 1rem;
+    .mileStone {
+      gap: 0.5rem;
+      button {
+        width: 5rem;
+        height: 1.5rem;
+      }
+    }
+    & > form {
+      .generalInput,
+      .conditionInput,
+      .proofInput {
+        width: 100%;
+      }
     }
   }
 `;

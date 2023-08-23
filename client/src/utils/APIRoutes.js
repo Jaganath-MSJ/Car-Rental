@@ -11,3 +11,4 @@ export const getUserRoute = `${host}/auth/getUser`;
 
 export const getAllCarsRoute = `${host}/car/getAllCars`;
 export const addCarRoute = `${host}/car/addCar`;
+export const updateCarRoute = `${host}/car/updateCar`;

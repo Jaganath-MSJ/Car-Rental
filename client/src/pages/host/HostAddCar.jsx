@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   toastOptionsError,
@@ -14,6 +14,7 @@ import { addCar } from "../../features/carSlice";
 import { getCurrentUser } from "../../features/userSlice";
 
 function HostAddCar() {
+  const [addCarRequest, setAddCarRequest] = useState("idle");
   const dispatch = useDispatch();
   const mileStoneValue = ["General", "Condition", "Proof"];
   const [mileStone, setMileStone] = useState(0);
@@ -32,37 +33,90 @@ function HostAddCar() {
     carPhotos: [],
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const { userId } = useSelector(getCurrentUser);
+  const { userId, accessToken } = useSelector(getCurrentUser);
 
   const handleChange = (e) => {
     e.preventDefault();
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    let newValue = e.target.value.replace(/\s+/g, " ");
+    if (["rent", "noOfSeats", "mileage"].includes(e.target.name)) {
+      newValue = newValue.replace(/\D/g, "").trim();
+    }
+    if (e.target.name === "carNumber") {
+      newValue = newValue.toUpperCase().trim();
+    }
+    setFormData({
+      ...formData,
+      [e.target.name]: newValue,
+    });
   };
 
   const handleUpload = (e) => {
     e.preventDefault();
     setFormData((prevData) => ({
       ...prevData,
-      carPhotos: [...prevData.carPhotos, ...selectedFiles],
+      carPhotos: [...selectedFiles],
     }));
+  };
+
+  const handleValidate = () => {
+    if (
+      !formData.carName ||
+      !formData.model ||
+      !formData.carNumber ||
+      !formData.category ||
+      !formData.rent ||
+      !formData.description ||
+      !formData.noOfSeats ||
+      !formData.mileage ||
+      !formData.fuelType ||
+      !formData.gearType ||
+      !formData.airCondition
+    ) {
+      toast.warning("Please fill all the fields", toastOptionsError);
+      return false;
+    } else if (formData.carPhotos.length < 1 && selectedFiles.length > 1) {
+      toast.warning("Please click on upload images", toastOptionsError);
+      return false;
+    } else if (selectedFiles.length < 1) {
+      toast.warning("Please upload at least one photo", toastOptionsError);
+      return false;
+    }
+    return true;
   };
 
   const handleAddCar = async (e) => {
     e.preventDefault();
     try {
-      dispatch(
-        addCar({
-          details: {
-            userId: userId,
-            ...formData,
-          },
-          token: "user.accessToken",
-        })
-      );
-      setFormData({});
-      toast.success("Car added successfully", toastOptionsSuccess);
+      if (handleValidate() && addCarRequest === "idle") {
+        setAddCarRequest("pending");
+        dispatch(
+          addCar({
+            details: {
+              userId: userId,
+              carName: formData.carName.trim(),
+              model: formData.model.trim(),
+              carNumber: formData.carNumber.trim(),
+              category: formData.category,
+              rent: formData.rent,
+              description: formData.description.trim(),
+              noOfSeats: formData.noOfSeats,
+              mileage: formData.mileage,
+              fuelType: formData.fuelType,
+              gearType: formData.gearType,
+              airCondition: formData.airCondition,
+              carPhotos: formData.carPhotos,
+            },
+            token: accessToken,
+          })
+        );
+        setFormData({});
+        setSelectedFiles([]);
+        toast.success("Car added successfully", toastOptionsSuccess);
+        setAddCarRequest("idle");
+      }
     } catch (err) {
       toast.error("Something went wrong", toastOptionsError);
+      setAddCarRequest("idle");
     }
   };
 
@@ -103,7 +157,6 @@ function HostAddCar() {
           <button onClick={() => setMileStone(mileStone + 1)}>Next</button>
         )}
       </div>
-      <ToastContainer />
     </Cointainer>
   );
 }

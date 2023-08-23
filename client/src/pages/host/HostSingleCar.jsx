@@ -59,12 +59,13 @@ function HostSingleCar() {
 }
 
 const Cointainer = styled.section`
-  padding: 0.09rem 1rem;
+  padding: 0rem 1rem;
   min-height: 75vh;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   .backLink {
+    padding-top: 1rem;
     & > a {
       display: flex;
       gap: 0.5rem;
@@ -76,6 +77,7 @@ const Cointainer = styled.section`
   }
   .carFullDetails {
     padding: 1rem;
+    padding-bottom: 1rem;
     display: flex;
     gap: 2rem;
     background-color: white;
@@ -105,7 +107,6 @@ const Cointainer = styled.section`
         justify-content: center;
         gap: 1rem;
         & > h2 {
-          margin: 0;
           font-size: 1.7rem;
         }
       }
@@ -134,7 +135,6 @@ const Cointainer = styled.section`
     }
   }
   @media only screen and (max-width: 1180px) {
-    padding: 0.09rem 0;
     .carFullDetails {
       flex-direction: column;
       & > section {
