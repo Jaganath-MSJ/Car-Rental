@@ -46,7 +46,6 @@ function Cars() {
 
 const Container = styled.section`
   padding: 1rem 2rem;
-  min-height: 82.3vh;
   display: flex;
   flex-direction: column;
   gap: 2rem;

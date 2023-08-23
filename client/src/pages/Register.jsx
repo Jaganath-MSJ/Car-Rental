@@ -108,7 +108,6 @@ function Regsiter() {
 }
 
 const Cointainer = styled.section`
-  min-height: 82.3vh;
   display: flex;
   justify-content: center;
   align-items: center;
