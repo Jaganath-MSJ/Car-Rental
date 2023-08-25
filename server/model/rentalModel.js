@@ -19,6 +19,18 @@ const rentalSchema = new mongoose.Schema({
   rentedAmount: {
     type: String,
   },
+  pickDate: {
+    type: String,
+  },
+  dropDate: {
+    type: String,
+  },
+  isDriverNeeded: {
+    type: Boolean,
+  },
+  status: {
+    type: String,
+  },
 });
 
 const rentalCollection = mongoose.model("Rental", rentalSchema);

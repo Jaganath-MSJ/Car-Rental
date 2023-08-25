@@ -19,6 +19,24 @@ function Cars() {
     Price: [],
     "Air Condition": [],
   });
+
+  const filterSearch = cars.filter((car) => {
+    return (
+      (!searchCar ||
+        car.carName.toLowerCase().includes(searchCar.toLowerCase().trim())) &&
+      (selectedFilters["Car type"].length === 0 ||
+        selectedFilters["Car type"].includes(car?.category)) &&
+      (selectedFilters["Fuel type"].length === 0 ||
+        selectedFilters["Fuel type"].includes(car?.fuelType)) &&
+      (selectedFilters["Gear type"].length === 0 ||
+        selectedFilters["Gear type"].includes(car?.gearType)) &&
+      (selectedFilters["Air Condition"].length === 0 ||
+        selectedFilters["Air Condition"].includes(car?.airCondition)) &&
+      (selectedFilters["Price"].length === 0 ||
+        selectedFilters["Price"].includes(car?.rent))
+    );
+  });
+
   return (
     <Container>
       <h1>Explore our car options</h1>
@@ -54,14 +72,7 @@ function Cars() {
             </button>
           </div>
           <div className="allCars">
-            {(searchCar === ""
-              ? cars
-              : cars.filter((car) =>
-                  car.carName
-                    .toLowerCase()
-                    .includes(searchCar.toLowerCase().trim())
-                )
-            ).map((car) => {
+            {filterSearch.map((car) => {
               return <EachCar car={car} key={car.carId} />;
             })}
           </div>

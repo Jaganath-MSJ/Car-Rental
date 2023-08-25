@@ -1,20 +1,62 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { SearchQuary } from "../App";
 
 function Home() {
+  const { searchQuary, setSearchQuary } = useContext(SearchQuary);
+  const currentDate = new Date();
+  const maxDate = new Date();
+  maxDate.setMonth(maxDate.getMonth() + 1);
+  const formattedCurrentDate = currentDate.toISOString().slice(0, 16);
+  const formattedMaxDate = maxDate.toISOString().slice(0, 16);
+
+  const handleChange = (e) => {
+    setSearchQuary({
+      ...searchQuary,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <Container>
       <h1>You got the travel plans, we get the travel cars.</h1>
       <div className="inputDate">
         <div>
-          <label>From Date</label>
-          <input type="date" />
+          <label>Pick-up Date</label>
+          <input
+            type="datetime-local"
+            name="startDate"
+            min={formattedCurrentDate}
+            max={formattedMaxDate}
+            value={searchQuary.startDate}
+            onChange={handleChange}
+          />
         </div>
         <div>
-          <label>To Date</label>
-          <input type="date" />
+          <label>Drop-off Date</label>
+          <input
+            type="datetime-local"
+            name="endDate"
+            min={formattedCurrentDate}
+            max={formattedMaxDate}
+            value={searchQuary.endDate}
+            onChange={handleChange}
+          />
         </div>
+      </div>
+      <div className="checkBox">
+        <input
+          type="checkBox"
+          name="needDriver"
+          checked={searchQuary.needDriver}
+          onChange={(e) =>
+            setSearchQuary({
+              ...searchQuary,
+              needDriver: e.target.checked,
+            })
+          }
+        />
+        <label>Need a driver</label>
       </div>
       <p>
         Add adventure to your life by joining the car movement. Rent the perfect
@@ -52,6 +94,17 @@ const Container = styled.section`
         border: 1px solid #c2c2c2;
         outline: none;
       }
+    }
+  }
+  .checkBox {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    & > input {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 0.3rem;
+      cursor: pointer;
     }
   }
   & > p {

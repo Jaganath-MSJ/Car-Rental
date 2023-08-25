@@ -6,6 +6,8 @@ import {
   isUserAuth,
   refreshToken,
   getAllUser,
+  updateUserInfo,
+  updateSavedCars,
 } from "../controller/userController.js";
 
 const userRouter = express.Router();
@@ -15,4 +17,6 @@ userRouter.post("/logout", logout);
 userRouter.post("/isUserAuth", isUserAuth);
 userRouter.post("/refresh_token", refreshToken);
 userRouter.get("/getAllUsers", getAllUser);
+userRouter.post("/updateUserInfo", updateUserInfo);
+userRouter.post("/updateSavedCars", updateSavedCars);
 export default userRouter;

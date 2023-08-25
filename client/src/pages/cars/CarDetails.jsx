@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { GoArrowLeft } from "react-icons/go";
@@ -23,10 +23,21 @@ import CancelPolicy from "../../components/cars/CancelPolicy";
 import PriceSummary from "../../components/cars/PriceSummary";
 import RentCar from "../../components/cars/RentCar";
 import { selectCarById } from "../../features/carSlice";
+import { getCurrentUser, selectUserNameById } from "../../features/userSlice";
+import { SearchQuary } from "../../App";
+import { selectRentalsByCustomerId } from "../../features/rentalSlice";
 
 function CarDetails() {
+  const { searchQuary } = useContext(SearchQuary);
   const { carId } = useParams();
   const car = useSelector((state) => selectCarById(state, carId));
+  const { userId } = useSelector(getCurrentUser);
+  const currentUserRental = useSelector((state) =>
+    selectRentalsByCustomerId(state, userId)
+  );
+  const isCarRented = currentUserRental.find(
+    (rental) => rental.carId === carId
+  );
 
   const [coupanCollased, setCoupanCollased] = useState(true);
   const [showCancelPolicy, setShowCancelPolicy] = useState(false);
@@ -60,7 +71,9 @@ function CarDetails() {
                 <p className="pick">{"Top"}</p>
               </div>
               <div className="carName">
-                <h2>{car.carName}</h2>
+                <h2>
+                  {car.carName} | {car.model}
+                </h2>
               </div>
               <div className="carSmallDetails">
                 <div>
@@ -77,7 +90,7 @@ function CarDetails() {
                 </div>
                 <div>
                   <TbAirConditioning />
-                  <p>{car.airCondition ? "AC" : "Non-AC"}</p>
+                  <p>{car.airCondition ? "AC" : "Non-AC"} condition</p>
                 </div>
               </div>
               <div className="carPrice">
@@ -125,23 +138,8 @@ function CarDetails() {
             <div className="carReviews">
               <h4>Reviews</h4>
               <div>
-                {car.reviews.map((review, index) => {
-                  return (
-                    <article key={index}>
-                      <div className="reviewStar">
-                        {[1, 2, 3, 4, 5].map((star, index) => {
-                          return (
-                            star <= review.rating && <AiFillStar key={index} />
-                          );
-                        })}
-                      </div>
-                      <div className="reviewedBy">
-                        {review.userId}
-                        <span>{formatDate1(review.reviewedOn)}</span>
-                      </div>
-                      <div className="reviewDesc">{review.comment}</div>
-                    </article>
-                  );
+                {car.reviews.map((review) => {
+                  return <EachReview review={review} key={review.reviewedOn} />;
                 })}
               </div>
             </div>
@@ -194,9 +192,28 @@ function CarDetails() {
                 />
               </p>
             </div>
-            <button onClick={() => setShowRentCar(!showRentCar)}>
-              Continue
-            </button>
+            {(!searchQuary.startDate || !searchQuary.endDate) &&
+              !isCarRented && (
+                <p className="error">
+                  Please select <Link to="/cars">pick-up and drop-off</Link>{" "}
+                  date to continue
+                </p>
+              )}
+            {!isCarRented && (
+              <button
+                disabled={!searchQuary.startDate || !searchQuary.endDate}
+                style={{
+                  cursor:
+                    !searchQuary.startDate || !searchQuary.endDate
+                      ? "not-allowed"
+                      : "pointer",
+                }}
+                onClick={() => setShowRentCar(!showRentCar)}
+              >
+                Continue
+              </button>
+            )}
+            {isCarRented && <p className="error">Your car is already rented</p>}
           </div>
         </div>
       </div>
@@ -206,6 +223,7 @@ function CarDetails() {
           onClose={setShowFareSummary}
           rentCar={setShowRentCar}
           price={Number(car.rent)}
+          isCarRented={isCarRented}
         />
       )}
       {showRentCar && (
@@ -213,9 +231,35 @@ function CarDetails() {
           onClose={setShowRentCar}
           price={Number(car.rent) + 399 + 99}
           hostUserId={car.userId}
+          carId={car.carId}
         />
       )}
     </Container>
+  );
+}
+
+function EachReview({ review }) {
+  const reviewerName = useSelector((state) =>
+    selectUserNameById(state, review.userId)
+  );
+  return (
+    <article>
+      <div className="reviewStar">
+        {[1, 2, 3, 4, 5].map((star) => {
+          return (
+            <AiFillStar
+              key={star}
+              className={star <= review?.rating ? "rated" : ""}
+            />
+          );
+        })}
+      </div>
+      <div className="reviewedBy">
+        {reviewerName}
+        <span>{formatDate1(review.reviewedOn)}</span>
+      </div>
+      <div className="reviewDesc">{review.comment}</div>
+    </article>
   );
 }
 
@@ -365,10 +409,13 @@ const Container = styled.section`
             border: 1px solid #161616;
             border-radius: 0.3rem;
             padding: 0.5rem;
-            width: 20rem;
+            width: 15rem;
             gap: 0.5rem;
             .reviewStar {
-              & > svg {
+              svg {
+                font-size: 1.1rem;
+              }
+              .rated {
                 color: #ff8c38;
               }
             }
@@ -445,6 +492,17 @@ const Container = styled.section`
           display: flex;
           justify-content: space-between;
         }
+        .error {
+          display: inline;
+          text-align: center;
+          & > a {
+            color: #ff8c38;
+            &:hover {
+              text-decoration: underline;
+              text-underline-offset: 0.2rem;
+            }
+          }
+        }
         & > button {
           align-self: center;
           background-color: #e17654;
@@ -453,6 +511,7 @@ const Container = styled.section`
           color: #fff7ed;
           border-radius: 0.3rem;
           padding: 0.3rem 0.5rem;
+          font-size: 1rem;
           cursor: pointer;
         }
       }

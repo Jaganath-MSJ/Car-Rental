@@ -1,12 +1,55 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { selectUserInfoById } from "../../features/userSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  toastOptionsError,
+  toastOptionsSuccess,
+} from "../../utils/ToastOptions";
+import { getCurrentUser, selectUserInfoById } from "../../features/userSlice";
+import { SearchQuary } from "../../App";
+import {
+  calculateDaysBetweenDates,
+  formatDate1,
+  formatTime1,
+} from "../../utils/DateFunction";
+import { addRental } from "../../features/rentalSlice";
 
-function RentCar({ onClose, price, hostUserId }) {
+function RentCar({ onClose, price, hostUserId, carId }) {
+  const { searchQuary } = useContext(SearchQuary);
+  const { userId, accessToken } = useSelector(getCurrentUser);
   const hostInfo = useSelector((state) =>
     selectUserInfoById(state, hostUserId)
   );
+  const totalDays = calculateDaysBetweenDates(
+    searchQuary.startDate,
+    searchQuary.endDate
+  );
+  const rentedAmount = totalDays * price;
+  const dispatch = useDispatch();
+  const handleRentCar = (e) => {
+    e.preventDefault();
+    try {
+      dispatch(
+        addRental({
+          details: {
+            carId: carId,
+            customerId: userId,
+            totalDays: totalDays,
+            rentedAmount: rentedAmount,
+            pickDate: searchQuary.startDate,
+            dropDate: searchQuary.endDate,
+            isDriverNeeded: searchQuary.needDriver,
+          },
+          token: accessToken,
+        })
+      );
+      toast.success("Car rented successfully", toastOptionsSuccess);
+    } catch (err) {
+      toast.error("something went wrong", toastOptionsError);
+    }
+  };
   return (
     <PopUp>
       <div>
@@ -22,30 +65,41 @@ function RentCar({ onClose, price, hostUserId }) {
             Phone: <span>{hostInfo.phone}</span>
           </p>
           <p>
-            Email: <span>{hostInfo.email}</span>
+            Email:&nbsp;
+            <span>
+              <a href={`mailto:${hostInfo.email}`}>{hostInfo.email}</a>
+            </span>
           </p>
         </div>
         <p>
-          Pick-up DateTime: <span>15-08-2023 11:30AM</span>
+          Pick-up DateTime:&nbsp;
+          <span>
+            {formatDate1(searchQuary.startDate)}&nbsp;
+            {formatTime1(searchQuary.startDate)}
+          </span>
         </p>
         <p>
-          Drop-off DateTime: <span>16-08-2023 06:30AM</span>
+          Drop-off DateTime:&nbsp;
+          <span>
+            {formatDate1(searchQuary.endDate)}&nbsp;
+            {formatTime1(searchQuary.endDate)}
+          </span>
         </p>
         <p>
-          Need a driver? <span>Yes</span>
+          Need a driver? <span>{searchQuary.needDriver ? "Yes" : "No"}</span>
         </p>
         <p>
           Rent: <span>&#x20B9;{price}/day</span>
         </p>
         <p>
-          No.of days: <span>2</span>
+          No.of days: <span>{totalDays}</span>
         </p>
         <p>
-          Total Amount to be paid: <span>&#x20B9;{price * 2}</span>
+          Total Amount to be paid: <span>&#x20B9;{rentedAmount}</span>
         </p>
         <p>By confirming the rent the request will se sent to the owner</p>
         <div className="btn">
-          <button>Confirm</button>
+          <button onClick={handleRentCar}>Confirm</button>
         </div>
       </div>
     </PopUp>

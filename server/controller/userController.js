@@ -124,6 +124,7 @@ export const getAllUser = async (req, res, next) => {
     const user = await userCollection.find(
       {},
       {
+        _id: 0,
         userId: 1,
         name: 1,
         role: 1,
@@ -131,11 +132,72 @@ export const getAllUser = async (req, res, next) => {
         phone: 1,
         city: 1,
         income: 1,
+        gender: 1,
+        savedCars: 1,
       }
     );
-    return res.send(user);
+    return res.send({ status: true, data: user });
   } catch (err) {
     next(err);
     return res.status(400).send({ msg: "Can't get the users" });
+  }
+};
+
+export const updateUserInfo = async (req, res, next) => {
+  try {
+    const { userId, name, email, phone, city, gender } = req.body;
+    const user = await userCollection.findOneAndUpdate(
+      { userId: userId },
+      {
+        name: name,
+        email: email,
+        phone: phone,
+        city: city,
+        gender: gender,
+      },
+      { new: true }
+    );
+    return res.send({ status: true, data: user });
+  } catch (err) {
+    next(err);
+    return res.status(400).send({ msg: "Can't update the user" });
+  }
+};
+
+export const updateSavedCars = async (req, res, next) => {
+  try {
+    const { userId, carId } = req.body;
+    const carIdExist = await userCollection.findOne({
+      userId: userId,
+      savedCars: {
+        $in: [carId],
+      },
+    });
+    let user;
+    if (carIdExist) {
+      user = await userCollection.findOneAndUpdate(
+        { userId: userId },
+        {
+          $pull: {
+            savedCars: carId,
+          },
+        },
+        { new: true }
+      );
+    } else {
+      user = await userCollection.findOneAndUpdate(
+        { userId: userId },
+        {
+          $push: {
+            savedCars: carId,
+          },
+        },
+        { new: true }
+      );
+    }
+    return res.send({ status: true, data: user });
+  } catch (err) {
+    next(err);
+    return res.status(400).send({ msg: "Can't update the user" });
   }
 };

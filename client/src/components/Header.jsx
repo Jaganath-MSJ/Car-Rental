@@ -25,7 +25,7 @@ function Header() {
           <NavLink to="login">Login</NavLink>
         </li>
         <li>
-          <NavLink to="profile">
+          <NavLink to={`user/${userId}`}>
             <FaUserCircle /> <span>{userName}</span>
           </NavLink>
         </li>

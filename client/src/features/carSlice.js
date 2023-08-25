@@ -4,6 +4,7 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import {
+  addCarReviewRoute,
   addCarRoute,
   getAllCarsRoute,
   updateCarRoute,
@@ -30,7 +31,7 @@ export const addCar = createAsyncThunk("addCar", async (addCar) => {
     const res = await axios.post(addCarRoute, addCar.details, {
       headers: { authorization: `Bearer ${addCar.token}` },
     });
-    return res.data;
+    return res.data.data;
   } catch (err) {
     throw new Error(err.response.data.msg);
   }
@@ -42,11 +43,26 @@ export const updateCar = createAsyncThunk("updateCar", async (updateCar) => {
       headers: { authorization: `Bearer ${updateCar.token}` },
     });
     console.log("Res", res.data);
-    return res.data;
+    return res.data.data;
   } catch (err) {
     throw new Error(err.response.data.msg);
   }
 });
+
+export const addCarReview = createAsyncThunk(
+  "addCarReview",
+  async (addCarReview) => {
+    console.log("addCarReview", addCarReview);
+    try {
+      const res = await axios.post(addCarReviewRoute, addCarReview.details, {
+        headers: { authorization: `Bearer ${addCarReview.token}` },
+      });
+      return res.data.data;
+    } catch (err) {
+      throw new Error(err.response.data.msg);
+    }
+  }
+);
 
 const carSlice = createSlice({
   name: "car",
@@ -79,7 +95,6 @@ const carSlice = createSlice({
       })
       .addCase(updateCar.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log("action", action.payload);
         const { carId } = action.payload;
         const updatedCars = state.car.map((car) =>
           car.carId === carId ? action.payload : car
@@ -90,6 +105,21 @@ const carSlice = createSlice({
         };
       })
       .addCase(updateCar.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(addCarReview.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const { carId } = action.payload;
+        const updatedCars = state.car.map((car) =>
+          car.carId === carId ? action.payload : car
+        );
+        return {
+          ...state,
+          car: updatedCars,
+        };
+      })
+      .addCase(addCarReview.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });

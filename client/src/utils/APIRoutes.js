@@ -8,7 +8,13 @@ export const isUserAuthRoute = `${host}/auth/isUserAuth`;
 export const refreshTokenRoute = `${host}/auth/refresh_token`;
 export const getAllUsersRoute = `${host}/auth/getAllUsers`;
 export const getUserRoute = `${host}/auth/getUser`;
+export const updateUserInfoRoute = `${host}/auth/updateUserInfo`;
+export const updateSavedCarsRoute = `${host}/auth/updateSavedCars`;
 
 export const getAllCarsRoute = `${host}/car/getAllCars`;
 export const addCarRoute = `${host}/car/addCar`;
 export const updateCarRoute = `${host}/car/updateCar`;
+export const addCarReviewRoute = `${host}/car/addCarReview`;
+
+export const getAllRentalsRoute = `${host}/rental/getAllRentals`;
+export const addRentalRoute = `${host}/rental/addRental`;

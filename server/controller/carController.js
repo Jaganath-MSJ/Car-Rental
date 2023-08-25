@@ -97,3 +97,27 @@ export const updateCar = async (req, res, next) => {
     return res.status(400).send({ msg: "Can't update a car" });
   }
 };
+
+export const addCarReview = async (req, res, next) => {
+  try {
+    const { carId, userId, comment, rating } = req.body;
+    const data = await carCollection.findOneAndUpdate(
+      { carId: carId },
+      {
+        $push: {
+          reviews: {
+            userId: userId,
+            comment: comment,
+            rating: rating,
+            reviewedOn: new Date().toISOString(),
+          },
+        },
+      },
+      { new: true }
+    );
+    return res.send({ status: true, data: data });
+  } catch (err) {
+    next(err);
+    return res.status(400).send({ msg: "Can't add a review" });
+  }
+};

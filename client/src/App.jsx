@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import {
   Route,
   RouterProvider,
@@ -25,8 +25,18 @@ import HostCarPhoto from "./components/host/HostCarPhoto";
 import HostAddCar from "./pages/host/HostAddCar";
 import HostCarEdit from "./components/host/HostCarEdit";
 import Profile from "./pages/profile/Profile";
+import ProfileAccount from "./pages/profile/ProfileAccount";
+import ProfileBookings from "./pages/profile/ProfileBookings";
+import ProfileSavedCar from "./pages/profile/ProfileSavedCar";
+
+export const SearchQuary = createContext();
 
 function App() {
+  const [searchQuary, setSearchQuary] = useState({
+    startDate: "",
+    endDate: "",
+    needDriver: false,
+  });
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
@@ -35,7 +45,11 @@ function App() {
         <Route path="register" element={<Register />} action={registerAction} />
         <Route path="login" element={<Login />} action={loginAction} />
 
-        <Route path="profile" element={<Profile />}></Route>
+        <Route path="user/:userId" element={<Profile />}>
+          <Route index element={<ProfileAccount />} />
+          <Route path="booking" element={<ProfileBookings />} />
+          <Route path="saved" element={<ProfileSavedCar />} />
+        </Route>
 
         <Route path="cars">
           <Route index element={<Cars />} />
@@ -65,7 +79,11 @@ function App() {
       </Route>
     )
   );
-  return <RouterProvider router={router} />;
+  return (
+    <SearchQuary.Provider value={{ searchQuary, setSearchQuary }}>
+      <RouterProvider router={router} />
+    </SearchQuary.Provider>
+  );
 }
 
 export default App;
