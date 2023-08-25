@@ -37,11 +37,19 @@ const useSchema = new mongoose.Schema({
   city: {
     type: String,
   },
+  gender: {
+    type: String,
+  },
   income: [incomeSchema],
   refreshToken: {
     type: String,
     default: "",
   },
+  savedCars: [
+    {
+      type: String,
+    },
+  ],
 });
 
 const userCollection = mongoose.model("Users", useSchema);

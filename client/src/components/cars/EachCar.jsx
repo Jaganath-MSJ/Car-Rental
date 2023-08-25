@@ -1,13 +1,46 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { AiFillStar } from "react-icons/ai";
 import { MdOutlineAirlineSeatReclineNormal } from "react-icons/md";
 import { BsGearFill, BsSpeedometer2, BsFillBookmarkFill } from "react-icons/bs";
 import { TbAirConditioning } from "react-icons/tb";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  toastOptionsError,
+  toastOptionsSuccess,
+} from "../../utils/ToastOptions";
 import CarCategory from "./CarCategory";
-import { Link } from "react-router-dom";
+import {
+  getCurrentUser,
+  selectUserInfoById,
+  updateSavedCars,
+} from "../../features/userSlice";
 
 function EachCar({ car }) {
+  const dispatch = useDispatch();
+  const { userId, accessToken } = useSelector(getCurrentUser);
+  const userSavedCars = useSelector((state) =>
+    selectUserInfoById(state, userId)
+  )?.savedCars;
+  const handleUpdateSavedCars = () => {
+    try {
+      dispatch(
+        updateSavedCars({
+          details: {
+            userId: userId,
+            carId: car.carId,
+          },
+          token: accessToken,
+        })
+      );
+      toast.success("Car saved successfully", toastOptionsSuccess);
+    } catch (err) {
+      toast.error("Something went wrong", toastOptionsError);
+    }
+  };
   return (
     <Car>
       <div className="carImage">
@@ -16,8 +49,12 @@ function EachCar({ car }) {
         </Link>
         <div>
           <p>
-            <AiFillStar /> {4.5}/5 reviews
+            <AiFillStar />
+            &nbsp;
+            {car.reviews.reduce((a, b) => b.rating + a, 0) /
+              car.reviews.length || 0}
           </p>
+          <p>{car.reviews.length} reviews</p>
           <p>{5} trips</p>
         </div>
       </div>
@@ -51,7 +88,10 @@ function EachCar({ car }) {
         <div className="carPrice">
           <p>&#x20B9;{car.rent}/day</p>
           <Link to={`/cars/${car.carId}`}>View All Details</Link>
-          <BsFillBookmarkFill />
+          <BsFillBookmarkFill
+            onClick={handleUpdateSavedCars}
+            className={userSavedCars.includes(car.carId) ? "saved" : ""}
+          />
         </div>
       </div>
     </Car>
@@ -74,10 +114,13 @@ const Car = styled.article`
     }
     & > div {
       display: flex;
+      justify-content: center;
       gap: 1rem;
       & > p {
         & > svg {
+          margin-bottom: -0.2rem;
           color: #ff8c38;
+          font-size: 1.1rem;
         }
       }
     }
@@ -144,6 +187,10 @@ const Car = styled.article`
       & > svg {
         color: gray;
         font-size: 1.2rem;
+        cursor: pointer;
+      }
+      .saved {
+        color: #161616;
       }
     }
   }
