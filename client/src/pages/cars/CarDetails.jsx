@@ -23,13 +23,21 @@ import CancelPolicy from "../../components/cars/CancelPolicy";
 import PriceSummary from "../../components/cars/PriceSummary";
 import RentCar from "../../components/cars/RentCar";
 import { selectCarById } from "../../features/carSlice";
-import { selectUserNameById } from "../../features/userSlice";
+import { getCurrentUser, selectUserNameById } from "../../features/userSlice";
 import { SearchQuary } from "../../App";
+import { selectRentalsByCustomerId } from "../../features/rentalSlice";
 
 function CarDetails() {
   const { searchQuary } = useContext(SearchQuary);
   const { carId } = useParams();
   const car = useSelector((state) => selectCarById(state, carId));
+  const { userId } = useSelector(getCurrentUser);
+  const currentUserRental = useSelector((state) =>
+    selectRentalsByCustomerId(state, userId)
+  );
+  const isCarRented = currentUserRental.find(
+    (rental) => rental.carId === carId
+  );
 
   const [coupanCollased, setCoupanCollased] = useState(true);
   const [showCancelPolicy, setShowCancelPolicy] = useState(false);
@@ -184,24 +192,28 @@ function CarDetails() {
                 />
               </p>
             </div>
-            {(!searchQuary.startDate || !searchQuary.endDate) && (
-              <p className="error">
-                Please select pick-up and drop-off date in the home page to
-                continue
-              </p>
+            {(!searchQuary.startDate || !searchQuary.endDate) &&
+              !isCarRented && (
+                <p className="error">
+                  Please select <Link to="/cars">pick-up and drop-off</Link>{" "}
+                  date to continue
+                </p>
+              )}
+            {!isCarRented && (
+              <button
+                disabled={!searchQuary.startDate || !searchQuary.endDate}
+                style={{
+                  cursor:
+                    !searchQuary.startDate || !searchQuary.endDate
+                      ? "not-allowed"
+                      : "pointer",
+                }}
+                onClick={() => setShowRentCar(!showRentCar)}
+              >
+                Continue
+              </button>
             )}
-            <button
-              disabled={!searchQuary.startDate || !searchQuary.endDate}
-              style={{
-                cursor:
-                  !searchQuary.startDate || !searchQuary.endDate
-                    ? "not-allowed"
-                    : "pointer",
-              }}
-              onClick={() => setShowRentCar(!showRentCar)}
-            >
-              Continue
-            </button>
+            {isCarRented && <p className="error">Your car is already rented</p>}
           </div>
         </div>
       </div>
@@ -211,6 +223,7 @@ function CarDetails() {
           onClose={setShowFareSummary}
           rentCar={setShowRentCar}
           price={Number(car.rent)}
+          isCarRented={isCarRented}
         />
       )}
       {showRentCar && (
@@ -480,7 +493,15 @@ const Container = styled.section`
           justify-content: space-between;
         }
         .error {
+          display: inline;
           text-align: center;
+          & > a {
+            color: #ff8c38;
+            &:hover {
+              text-decoration: underline;
+              text-underline-offset: 0.2rem;
+            }
+          }
         }
         & > button {
           align-self: center;

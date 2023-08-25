@@ -133,6 +133,12 @@ export const selectUserNameById = createSelector(
   (users, userId) => users.find((user) => user.userId === userId)?.name
 );
 
+export const selectCurrentUserInfo = createSelector(
+  [selectAllUser, getCurrentUser],
+  (users, currentUser) =>
+    users.find((user) => user.userId === currentUser.userId)
+);
+
 export const { setCurrentUser } = userSlice.actions;
 
 export default userSlice.reducer;

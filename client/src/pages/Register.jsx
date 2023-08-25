@@ -8,22 +8,25 @@ import { registerApi } from "../utils/handleApi";
 
 export async function registerAction({ request }) {
   const formData = await request.formData();
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const phone = formData.get("phone");
-  const city = formData.get("city");
-  const password = formData.get("password");
-  const confirmPassword = formData.get("confirmPassword");
-  if (name.trim().length < 3) {
+  const name = formData.get("name").replace(/\s+/g, " ").trim();
+  const email = formData.get("email").replace(/\s+/g, "").trim();
+  const phone = formData.get("phone").replace(/\D+/g, " ").trim();
+  const city = formData.get("city").replace(/\s+/g, "").trim();
+  const password = formData.get("password").replace(/\s+/g, "").trim();
+  const confirmPassword = formData
+    .get("confirmPassword")
+    .replace(/\s+/g, "")
+    .trim();
+  if (name.length < 3) {
     toast.warning("Name must be at least 3 characters long", toastOptionsError);
     return false;
   } else if (email === "") {
-    toast.warning("Name must be at least 3 characters long", toastOptionsError);
+    toast.warning("Email is required", toastOptionsError);
     return false;
-  } else if (phone === "") {
-    toast.warning("Phone no is required", toastOptionsError);
+  } else if (phone.length !== 10) {
+    toast.warning("Phone number must be 10 digits", toastOptionsError);
     return false;
-  } else if (city.trim() === "") {
+  } else if (city === "") {
     toast.warning("City is required", toastOptionsError);
     return false;
   } else if (password.length < 8) {

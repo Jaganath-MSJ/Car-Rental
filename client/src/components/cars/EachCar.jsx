@@ -90,7 +90,11 @@ function EachCar({ car }) {
           <Link to={`/cars/${car.carId}`}>View All Details</Link>
           <BsFillBookmarkFill
             onClick={handleUpdateSavedCars}
-            className={userSavedCars.includes(car.carId) ? "saved" : ""}
+            className={
+              userSavedCars.length > 0 && userSavedCars.includes(car.carId)
+                ? "saved"
+                : ""
+            }
           />
         </div>
       </div>
