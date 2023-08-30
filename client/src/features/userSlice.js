@@ -9,6 +9,7 @@ import {
   getAllUsersRoute,
   updateSavedCarsRoute,
   updateUserInfoRoute,
+  uploadProfilePicRoute,
 } from "../utils/APIRoutes.js";
 
 const initialState = {
@@ -60,6 +61,24 @@ export const updateSavedCars = createAsyncThunk(
   }
 );
 
+export const uploadProfilePic = createAsyncThunk(
+  "uploadProfilePic",
+  async (uploadProfile) => {
+    try {
+      const res = await axios.post(
+        uploadProfilePicRoute,
+        uploadProfile.details,
+        {
+          headers: { authorization: `Bearer ${uploadProfile.token}` },
+        }
+      );
+      return res.data.data;
+    } catch (err) {
+      throw new Error(err.response.data.msg);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -71,6 +90,9 @@ const userSlice = createSlice({
         userId: decoded.userId,
         role: decoded.role,
       };
+    },
+    clearUser: (state) => {
+      state.currentUser = {};
     },
   },
   extraReducers(builder) {
@@ -115,6 +137,21 @@ const userSlice = createSlice({
       .addCase(updateSavedCars.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(uploadProfilePic.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const { userId } = action.payload;
+        const updatedUser = state.user.map((user) =>
+          user.userId === userId ? action.payload : user
+        );
+        return {
+          ...state,
+          user: updatedUser,
+        };
+      })
+      .addCase(uploadProfilePic.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
@@ -139,6 +176,6 @@ export const selectCurrentUserInfo = createSelector(
     users.find((user) => user.userId === currentUser.userId)
 );
 
-export const { setCurrentUser } = userSlice.actions;
+export const { setCurrentUser, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;

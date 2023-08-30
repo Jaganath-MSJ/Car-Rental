@@ -1,5 +1,10 @@
 import axios from "axios";
-import { loginRoute, refreshTokenRoute, registerRoute } from "./APIRoutes";
+import {
+  loginRoute,
+  refreshTokenRoute,
+  registerRoute,
+  logoutRoute,
+} from "./APIRoutes";
 
 export async function registerApi({ name, email, phone, city, password }) {
   const res = await axios.post(registerRoute, {
@@ -39,5 +44,16 @@ export async function refreshTokenApi() {
       },
     })
   ).json();
+  return res;
+}
+
+export async function logoutApi() {
+  const res = await axios.post(
+    logoutRoute,
+    {},
+    {
+      withCredentials: true,
+    }
+  );
   return res;
 }

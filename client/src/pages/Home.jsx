@@ -20,6 +20,10 @@ function Home() {
   return (
     <Container>
       <h1>You got the travel plans, we get the travel cars.</h1>
+      <p>
+        Add adventure to your life by joining the car movement. Rent the perfect
+        car to make your perfect road trip.
+      </p>
       <div className="inputDate">
         <div>
           <label>Pick-up Date</label>
@@ -58,10 +62,6 @@ function Home() {
         />
         <label>Need a driver</label>
       </div>
-      <p>
-        Add adventure to your life by joining the car movement. Rent the perfect
-        car to make your perfect road trip.
-      </p>
       <Link to="/cars">Find your car</Link>
     </Container>
   );

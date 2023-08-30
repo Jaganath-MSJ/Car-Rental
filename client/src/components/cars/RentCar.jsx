@@ -15,6 +15,7 @@ import {
   formatTime1,
 } from "../../utils/DateFunction";
 import { addRental } from "../../features/rentalSlice";
+import PopUp from "../../pages/PopUp";
 
 function RentCar({ onClose, price, hostUserId, carId }) {
   const { searchQuary } = useContext(SearchQuary);
@@ -51,9 +52,8 @@ function RentCar({ onClose, price, hostUserId, carId }) {
     }
   };
   return (
-    <PopUp>
-      <div>
-        <button onClick={() => onClose(false)}>&times;</button>
+    <PopUp onClose={onClose}>
+      <Cointainer>
         <h2>Rent this Car</h2>
         <div className="ownerDetails">
           <h4>Owner Info</h4>
@@ -101,74 +101,42 @@ function RentCar({ onClose, price, hostUserId, carId }) {
         <div className="btn">
           <button onClick={handleRentCar}>Confirm</button>
         </div>
-      </div>
+      </Cointainer>
     </PopUp>
   );
 }
 
-const PopUp = styled.section`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 2;
+const Cointainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  & > div {
-    background-color: #fff;
-    padding: 2rem;
+  flex-direction: column;
+  gap: 1rem;
+  & > h2 {
+    margin-bottom: 0.8rem;
+  }
+  .ownerDetails {
+    border: 1px solid #161616;
+    padding: 1rem;
     border-radius: 0.5rem;
-    width: max-content;
-    height: max-content;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
+    & > h4 {
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+  }
+  .btn {
+    display: flex;
+    justify-content: center;
     & > button {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 2rem;
-      background-color: transparent;
+      background-color: #e17654;
       border: none;
+      outline: none;
+      color: #fff7ed;
+      font-size: 1.1rem;
+      border-radius: 0.3rem;
+      padding: 0.3rem 0.8rem;
       cursor: pointer;
-      transition: all 0.1s ease-in-out;
-      &:hover {
-        color: red;
-      }
-    }
-    & > h2 {
-      margin-bottom: 0.8rem;
-    }
-    .ownerDetails {
-      border: 1px solid #161616;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      & > h4 {
-        font-size: 1.3rem;
-        font-weight: 400;
-      }
-    }
-    .btn {
-      display: flex;
-      justify-content: center;
-      & > button {
-        background-color: #e17654;
-        border: none;
-        outline: none;
-        color: #fff7ed;
-        font-size: 1.1rem;
-        border-radius: 0.3rem;
-        padding: 0.3rem 0.8rem;
-        cursor: pointer;
-      }
     }
   }
 `;

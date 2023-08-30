@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import HostEachCar from "../../components/host/HostEachCar";
 import { getCurrentUser } from "../../features/userSlice";
 import { selectCarsByUserId } from "../../features/carSlice";
@@ -16,11 +15,7 @@ function HostCars() {
       </div>
       <div className="hostAllCars">
         {hostCars.map((car) => {
-          return (
-            <Link to={`/host/cars/${car.carId}`} key={car.carId}>
-              <HostEachCar hostCar={car} />
-            </Link>
-          );
+          return <HostEachCar hostCar={car} key={car.carId} />;
         })}
       </div>
     </Cointainer>
@@ -39,6 +34,12 @@ const Cointainer = styled.section`
     display: flex;
     flex-wrap: wrap;
     gap: 1rem 2rem;
+    & > article {
+      width: 46%;
+      @media only screen and (max-width: 1040px) {
+        width: 100%;
+      }
+    }
   }
   @media only screen and (max-width: 768px) {
     padding: 1rem 0;

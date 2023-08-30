@@ -1,26 +1,42 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import ReviewCar from "./ReviewCar";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { selectCarById } from "../../features/carSlice";
+import { getCurrentUser } from "../../features/userSlice";
 import { formatDateTime1 } from "../../utils/DateFunction";
+import ReviewCar from "./ReviewCar";
 
 function EachBooking({ bookedCar }) {
   const [showAddReview, setShowAddReview] = useState(false);
+  const { userId } = useSelector(getCurrentUser);
   const car = useSelector((state) => selectCarById(state, bookedCar.carId));
+  const isBooked = new Date(bookedCar.pickupDate) > new Date();
+  const isActive = new Date(bookedCar.dropDate) > new Date();
   if (!car) return <div>Loading...</div>;
+  const isReviewAdded = car.reviews.find((review) => review.userId === userId);
   return (
     <Article>
       <div className="bookHeader">
-        <div className="carImage">
-          <img src={car.carPhotos[0]} alt={car.carName} draggable="false" />
-        </div>
-        <div className="carDetails">
-          <h3>{car.carName}</h3>
-          <p>{car.carNumber}</p>
-          <p>&#x20B9;{bookedCar.rentedAmount}</p>
+        <div className="car">
+          <div className="carImage">
+            <Link to={`/cars/${car.carId}`}>
+              <img src={car.carPhotos[0]} alt={car.carName} draggable="false" />
+            </Link>
+          </div>
+          <div className="carDetails">
+            <h3>{car.carName}</h3>
+            <p>{car.carNumber}</p>
+            <p>&#x20B9;{bookedCar.rentedAmount}</p>
+          </div>
         </div>
         <div className="travelDate">
+          <p className="status">
+            Status:&nbsp;
+            <span>
+              {isBooked ? "Booked" : isActive ? "Active" : "Completed"}
+            </span>
+          </p>
           <p>
             Pick-up: <span>{formatDateTime1(bookedCar.pickDate)}</span>
           </p>
@@ -34,16 +50,16 @@ function EachBooking({ bookedCar }) {
           Booked on&nbsp;
           {formatDateTime1(bookedCar.rentedOn)}
         </p>
-        <p className="status">
-          Status: <span>Booked</span>
-        </p>
-        <button
-          className="reviewBtn"
-          onClick={() => setShowAddReview(!showAddReview)}
-        >
-          Add Review
-        </button>
-        <button className="cancelBtn">Cancel Booking</button>
+        {!isActive && !isReviewAdded && (
+          <button
+            className="reviewBtn"
+            onClick={() => setShowAddReview(!showAddReview)}
+          >
+            Add Review
+          </button>
+        )}
+        {isReviewAdded && <button className="reviewBtn">Review Added</button>}
+        {isBooked && <button className="cancelBtn">Cancel Booking</button>}
       </div>
       {showAddReview && (
         <ReviewCar onClose={setShowAddReview} carId={car.carId} />
@@ -61,39 +77,43 @@ const Article = styled.article`
   width: 100%;
   .bookHeader {
     display: flex;
-    gap: 1rem;
-    .carImage {
-      img {
-        width: 10rem;
-        height: 6rem;
-        object-fit: cover;
-        border-radius: 0.3rem;
-      }
-    }
-    .carDetails {
+    justify-content: space-between;
+    .car {
       display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
+      gap: 1rem;
+      .carImage {
+        img {
+          width: 10rem;
+          height: 6rem;
+          object-fit: cover;
+          border-radius: 0.3rem;
+        }
+      }
+      .carDetails {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
     }
     .travelDate {
       display: flex;
       flex-direction: column;
       gap: 0.7rem;
+      .status {
+        span {
+          background-color: green;
+          color: #fff7ed;
+          padding: 0.3rem 0.5rem;
+          border-radius: 0.3rem;
+          border: none;
+          outline: none;
+        }
+      }
     }
   }
   .bookDetails {
     display: flex;
     justify-content: space-between;
-    .status {
-      span {
-        background-color: green;
-        color: #fff7ed;
-        padding: 0.3rem 0.5rem;
-        border-radius: 0.3rem;
-        border: none;
-        outline: none;
-      }
-    }
     .reviewBtn,
     .cancelBtn {
       background-color: #ff8c38;

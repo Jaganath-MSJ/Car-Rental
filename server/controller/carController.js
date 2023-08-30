@@ -1,11 +1,14 @@
 import { nanoid } from "nanoid";
 import carCollection from "../model/carModel.js";
 
+const fieldNotProjected = {
+  _id: 0,
+  __v: 0,
+};
+
 export const getAllCars = async (req, res, next) => {
   try {
-    const cars = await carCollection
-      .find({}, { _id: 0, __v: 0 })
-      .sort({ updatedOn: -1 });
+    const cars = await carCollection.find({}, fieldNotProjected);
     return res.send({ status: true, data: cars });
   } catch (err) {
     next(err);
@@ -30,24 +33,27 @@ export const addCar = async (req, res, next) => {
       airCondition,
       carPhotos,
     } = req.body;
-    const data = await carCollection.create({
-      carId: nanoid(),
-      userId: userId,
-      carName: carName,
-      model: model,
-      carNumber: carNumber,
-      category: category,
-      rent: rent,
-      description: description,
-      noOfSeats: noOfSeats,
-      mileage: mileage,
-      fuelType: fuelType,
-      gearType: gearType,
-      airCondition: airCondition,
-      carPhotos: carPhotos,
-      postedOn: new Date().toISOString(),
-      updatedOn: new Date().toISOString(),
-    });
+    const data = await carCollection.create(
+      {
+        carId: nanoid(),
+        userId: userId,
+        carName: carName,
+        model: model,
+        carNumber: carNumber,
+        category: category,
+        rent: rent,
+        description: description,
+        noOfSeats: noOfSeats,
+        mileage: mileage,
+        fuelType: fuelType,
+        gearType: gearType,
+        airCondition: airCondition,
+        carPhotos: carPhotos,
+        postedOn: new Date().toISOString(),
+        updatedOn: new Date().toISOString(),
+      },
+      { projection: fieldNotProjected }
+    );
     return res.send({ status: true, data: data });
   } catch (err) {
     next(err);
@@ -89,7 +95,7 @@ export const updateCar = async (req, res, next) => {
         carPhotos: carPhotos,
         updatedOn: new Date().toISOString(),
       },
-      { new: true }
+      { new: true, projection: fieldNotProjected }
     );
     return res.send({ status: true, data: data });
   } catch (err) {
@@ -113,7 +119,7 @@ export const addCarReview = async (req, res, next) => {
           },
         },
       },
-      { new: true }
+      { new: true, projection: fieldNotProjected }
     );
     return res.send({ status: true, data: data });
   } catch (err) {

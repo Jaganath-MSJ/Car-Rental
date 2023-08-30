@@ -40,6 +40,10 @@ const useSchema = new mongoose.Schema({
   gender: {
     type: String,
   },
+  profilePic: {
+    type: String,
+    default: "",
+  },
   income: [incomeSchema],
   refreshToken: {
     type: String,

@@ -12,6 +12,13 @@ import { isAuth } from "../utils/isAuth.js";
 
 const { verify } = pkg;
 
+const fieldNotProjected = {
+  _id: 0,
+  __v: 0,
+  password: 0,
+  refreshToken: 0,
+};
+
 export const register = async (req, res, next) => {
   try {
     const { name, email, phone, password, city } = req.body;
@@ -121,21 +128,7 @@ export const refreshToken = async (req, res) => {
 
 export const getAllUser = async (req, res, next) => {
   try {
-    const user = await userCollection.find(
-      {},
-      {
-        _id: 0,
-        userId: 1,
-        name: 1,
-        role: 1,
-        email: 1,
-        phone: 1,
-        city: 1,
-        income: 1,
-        gender: 1,
-        savedCars: 1,
-      }
-    );
+    const user = await userCollection.find({}, fieldNotProjected);
     return res.send({ status: true, data: user });
   } catch (err) {
     next(err);
@@ -155,7 +148,7 @@ export const updateUserInfo = async (req, res, next) => {
         city: city,
         gender: gender,
       },
-      { new: true }
+      { new: true, projection: fieldNotProjected }
     );
     return res.send({ status: true, data: user });
   } catch (err) {
@@ -182,7 +175,7 @@ export const updateSavedCars = async (req, res, next) => {
             savedCars: carId,
           },
         },
-        { new: true }
+        { new: true, projection: fieldNotProjected }
       );
     } else {
       user = await userCollection.findOneAndUpdate(
@@ -192,9 +185,28 @@ export const updateSavedCars = async (req, res, next) => {
             savedCars: carId,
           },
         },
-        { new: true }
+        { new: true, projection: fieldNotProjected }
       );
     }
+    return res.send({ status: true, data: user });
+  } catch (err) {
+    next(err);
+    return res.status(400).send({ msg: "Can't update the user" });
+  }
+};
+
+export const uploadProfilePic = async (req, res, next) => {
+  try {
+    const { userId, profilePic } = req.body;
+    const user = await userCollection.findOneAndUpdate(
+      { userId: userId },
+      {
+        $set: {
+          profilePic: profilePic,
+        },
+      },
+      { new: true, projection: fieldNotProjected }
+    );
     return res.send({ status: true, data: user });
   } catch (err) {
     next(err);

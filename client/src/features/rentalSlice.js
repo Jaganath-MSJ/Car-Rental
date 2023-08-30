@@ -74,4 +74,19 @@ export const selectRentalsByCustomerId = createSelector(
   (rentals, userId) => rentals.filter((rental) => rental.customerId === userId)
 );
 
+export const selectRentedCarCountByCarId = createSelector(
+  [selectAllRental, (_, carId) => carId],
+  (rentals, carId) =>
+    rentals.reduce(
+      (a, b) =>
+        b.carId === carId && new Date(b.dropDate) < new Date() ? a + 1 : a,
+      0
+    )
+);
+
+export const selectRentalsById = createSelector(
+  [selectAllRental, (_, carId) => carId],
+  (rentals, carId) => rentals.filter((rental) => rental.carId === carId)
+);
+
 export default userSlice.reducer;

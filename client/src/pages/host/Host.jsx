@@ -15,25 +15,28 @@ function Host() {
         <div className="hostIncome">
           <div className="incomeDetails">
             <h2>Welcome!</h2>
-            <p>
-              Income last <span>30 days</span>
-            </p>
-            <h1>&#x20B9;29200</h1>
+            <p>Income for this month</p>
+            <h3>&#x20B9;29200</h3>
           </div>
           <div>
-            <Link to="/host/income">Details</Link>
+            <Link to="/host/income" className="btn-secondary">
+              Details
+            </Link>
           </div>
         </div>
         <div className="hostReview">
           <div className="reviewDetails">
-            <h3>Review score</h3>
-            <p>
+            <h2>Review score</h2>
+            <h3>
               <AiFillStar />
-              <span>5.0</span>/5
-            </p>
+              5.0
+              <span>Overall</span>
+            </h3>
           </div>
           <div>
-            <Link to="/host/review">Details</Link>
+            <Link to="/host/review" className="btn-secondary">
+              Details
+            </Link>
           </div>
         </div>
       </div>
@@ -44,11 +47,7 @@ function Host() {
         </div>
         <div className="sampleCars">
           {hostCars.slice(0, 4).map((car) => {
-            return (
-              <Link to={`/host/cars/${car.carId}`} key={car.carId}>
-                <HostEachCar hostCar={car} />
-              </Link>
-            );
+            return <HostEachCar hostCar={car} key={car.carId} />;
           })}
         </div>
       </div>
@@ -59,19 +58,16 @@ function Host() {
 const Cointainer = styled.section`
   padding: 1.5rem 1rem;
   display: flex;
-  flex-direction: column;
   gap: 2rem;
   .hostTop {
     display: flex;
-    gap: 2rem;
-    .hostIncome {
-      background-color: #ffead0;
-      border-radius: 0.3rem;
+    flex-direction: column;
+    width: 30%;
+    & > div {
       padding: 1rem;
-      width: 35%;
       display: flex;
       justify-content: space-between;
-      .incomeDetails {
+      & > div:first-child {
         display: flex;
         flex-direction: column;
         gap: 0.9rem;
@@ -83,56 +79,34 @@ const Cointainer = styled.section`
             text-underline-offset: 0.25rem;
           }
         }
-        & > h1 {
-          font-size: 2rem;
-        }
-      }
-      & > div:last-child {
-        display: flex;
-        align-items: center;
-        transition: all 0.3s ease-in-out;
-        & > a:hover {
-          text-decoration: underline;
-          text-underline-offset: 0.2rem;
-        }
-      }
-    }
-    .hostReview {
-      background-color: #ffddb2;
-      border-radius: 0.3rem;
-      padding: 1rem;
-      width: 35%;
-      display: flex;
-      justify-content: space-between;
-      .reviewDetails {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
         & > h3 {
-          font-size: 1.5rem;
-        }
-        & > p {
-          font-size: 1.2rem;
-          & > svg {
+          font-size: 1.4rem;
+          display: flex;
+          gap: 0.3rem;
+          svg {
             color: #ff8c38;
           }
-          & > span {
-            font-weight: bold;
+          span {
+            font-weight: normal;
           }
         }
       }
       & > div:last-child {
         display: flex;
         align-items: center;
-        transition: all 0.3s ease-in-out;
-        & > a:hover {
-          text-decoration: underline;
-          text-underline-offset: 0.2rem;
-        }
       }
+    }
+    .hostIncome {
+      background-color: rgba(40, 167, 69, 0.5);
+      border-radius: 0.3rem 0.3rem 0 0;
+    }
+    .hostReview {
+      background-color: rgba(40, 167, 69, 0.8);
+      border-radius: 0 0 0.3rem 0.3rem;
     }
   }
   .hostCars {
+    width: 70%;
     .carsHeader {
       display: flex;
       justify-content: space-between;
@@ -153,29 +127,11 @@ const Cointainer = styled.section`
       gap: 1rem 2rem;
     }
   }
-  @media only screen and (max-width: 820px) {
-    .hostTop {
-      .hostIncome,
-      .hostReview {
-        width: 50%;
-      }
-    }
-  }
-  @media only screen and (max-width: 570px) {
-    padding: 1rem 0;
-    .hostTop {
-      flex-direction: column;
-      gap: 0;
-      .hostIncome,
-      .hostReview {
-        width: 95%;
-      }
-      .hostIncome {
-        border-radius: 0.3rem 0.3rem 0 0;
-      }
-      .hostReview {
-        border-radius: 0 0 0.3rem 0.3rem;
-      }
+  @media only screen and (max-width: 950px) {
+    flex-direction: column;
+    .hostTop,
+    .hostCars {
+      width: 100%;
     }
   }
 `;

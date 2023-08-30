@@ -18,6 +18,10 @@ import {
   selectUserInfoById,
   updateSavedCars,
 } from "../../features/userSlice";
+import {
+  selectAllRental,
+  selectRentedCarCountByCarId,
+} from "../../features/rentalSlice";
 
 function EachCar({ car }) {
   const dispatch = useDispatch();
@@ -25,6 +29,11 @@ function EachCar({ car }) {
   const userSavedCars = useSelector((state) =>
     selectUserInfoById(state, userId)
   )?.savedCars;
+  const trips = useSelector((state) =>
+    selectRentedCarCountByCarId(state, car.carId)
+  );
+  const rentedCar = useSelector(selectAllRental);
+  const isTopPick = (trips / rentedCar.length) * 100 > 35;
   const handleUpdateSavedCars = () => {
     try {
       dispatch(
@@ -55,14 +64,14 @@ function EachCar({ car }) {
               car.reviews.length || 0}
           </p>
           <p>{car.reviews.length} reviews</p>
-          <p>{5} trips</p>
+          <p>{trips} trips</p>
         </div>
       </div>
       <div className="carDetails">
         <div className="carType">
           <CarCategory category={car.category} />
           <p className="fuel">{car.fuelType}</p>
-          <p className="pick">{"Top"}</p>
+          {isTopPick && <p className="pick">Top Pick</p>}
         </div>
         <div className="carName">
           <h2>{car.carName}</h2>
@@ -91,7 +100,9 @@ function EachCar({ car }) {
           <BsFillBookmarkFill
             onClick={handleUpdateSavedCars}
             className={
-              userSavedCars.length > 0 && userSavedCars.includes(car.carId)
+              userSavedCars &&
+              userSavedCars.length > 0 &&
+              userSavedCars.includes(car.carId)
                 ? "saved"
                 : ""
             }
@@ -105,6 +116,11 @@ function EachCar({ car }) {
 const Car = styled.article`
   display: flex;
   gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+  height: max-content;
+  width: 34rem;
   .carImage {
     display: flex;
     flex-direction: column;
@@ -132,8 +148,10 @@ const Car = styled.article`
   .carDetails {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 1rem;
     padding: 0 0.2rem;
+    flex: 1;
     .carType {
       display: flex;
       gap: 0.3rem;
@@ -143,16 +161,9 @@ const Car = styled.article`
         justify-content: center;
         align-items: center;
         height: 2rem;
+        width: 5.4rem;
+        border: 1px solid rgba(0, 0, 0, 0.3);
         border-radius: 0.3rem;
-        color: #ffead0;
-      }
-      .fuel {
-        width: 5rem;
-        background-color: green;
-      }
-      .pick {
-        width: 5.5rem;
-        background-color: blue;
       }
     }
     .carName {
@@ -178,15 +189,10 @@ const Car = styled.article`
         font-size: 1.1rem;
         font-weight: bold;
       }
-      & > a {
-        background-color: #ff8c38;
-        color: #fff7ed;
-        padding: 0.3rem 0.5rem;
-        border-radius: 0.3rem;
-        &:hover {
-          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-          color: #161616;
-        }
+      & > a:hover {
+        text-decoration: underline;
+        text-underline-offset: 0.2rem;
+        transition: 0.3s ease-in-out;
       }
       & > svg {
         color: gray;
@@ -194,12 +200,15 @@ const Car = styled.article`
         cursor: pointer;
       }
       .saved {
-        color: #161616;
+        color: #ff8c38;
       }
     }
   }
   @media screen and (max-width: 600px) {
     flex-direction: column;
+    .carDetails {
+      width: 100%;
+    }
   }
 `;
 

@@ -3,8 +3,12 @@ import { useSelector } from "react-redux";
 import { Link, NavLink, Outlet, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { GoArrowLeft } from "react-icons/go";
+import { MdOutlineAirlineSeatReclineNormal } from "react-icons/md";
+import { BsGearFill, BsSpeedometer2 } from "react-icons/bs";
+import { TbAirConditioning } from "react-icons/tb";
 import CarCategory from "../../components/cars/CarCategory";
 import { selectCarById } from "../../features/carSlice";
+import { formatDateTime1 } from "../../utils/DateFunction";
 
 function HostSingleCar() {
   const { hostCarId } = useParams();
@@ -28,13 +32,42 @@ function HostSingleCar() {
             />
           </div>
           <div className="carName">
-            <h2>{hostCar.carName}</h2>
-            <CarCategory category={hostCar.category} />
+            <div className="carType">
+              <CarCategory category={hostCar.category} />
+              <p className="fuel">{hostCar.fuelType}</p>
+            </div>
+            <div className="carName">
+              <h2>{`${hostCar.carName} | ${hostCar.model}`}</h2>
+            </div>
+            <div className="carSmallDetails">
+              <div>
+                <MdOutlineAirlineSeatReclineNormal />
+                <p>{`${hostCar.noOfSeats} seats`}</p>
+              </div>
+              <div>
+                <BsGearFill />
+                <p>{hostCar.gearType}</p>
+              </div>
+              <div>
+                <BsSpeedometer2 />
+                <p>{`${hostCar.mileage}km/hr`}</p>
+              </div>
+              <div>
+                <TbAirConditioning />
+                <p>{hostCar.airCondition ? "AC" : "Non-AC"} condition</p>
+              </div>
+            </div>
+            <div className="carPrice">
+              <p>
+                <span>&#x20B9;{hostCar.rent}</span>/day
+              </p>
+              <p>Posted on {formatDateTime1(hostCar.postedOn)}</p>
+            </div>
           </div>
         </section>
         <section className="other">
           <nav>
-            <ul>
+            <ul className="menuBar">
               <li>
                 <NavLink to="" end>
                   Details
@@ -84,6 +117,7 @@ const Cointainer = styled.section`
     border-radius: 0.3rem;
     .car {
       display: flex;
+      flex-direction: column;
       gap: 1rem;
       height: max-content;
       .carImage {
@@ -96,7 +130,7 @@ const Cointainer = styled.section`
             height: 12rem;
           }
           @media only screen and (max-width: 550px) {
-            width: 10rem;
+            width: 12rem;
             height: 8rem;
           }
         }
@@ -106,8 +140,41 @@ const Cointainer = styled.section`
         flex-direction: column;
         justify-content: center;
         gap: 1rem;
+        .carType {
+          display: flex;
+          gap: 0.3rem;
+          .fuel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark-color);
+            height: 2rem;
+            width: 5.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            border-radius: 0.3rem;
+          }
+        }
+        .carName {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        .carSmallDetails {
+          display: grid;
+          grid-template-columns: 50% 50%;
+          gap: 0.7rem 0.5rem;
+          & > div {
+            display: flex;
+            gap: 0.3rem;
+          }
+        }
         & > h2 {
           font-size: 1.7rem;
+        }
+        .carPrice {
+          p span {
+            font-weight: bold;
+          }
         }
       }
     }
@@ -117,20 +184,6 @@ const Cointainer = styled.section`
         display: flex;
         gap: 2rem;
         padding: 0;
-        & > li {
-          list-style: none;
-          & > a {
-            color: #4d4d4d;
-            transition: all 0.3s ease-in-out;
-          }
-          & > a:hover,
-          .active {
-            color: #161616;
-            font-weight: bold;
-            text-decoration: underline;
-            text-underline-offset: 0.2rem;
-          }
-        }
       }
     }
   }

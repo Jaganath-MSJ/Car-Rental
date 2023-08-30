@@ -1,190 +1,205 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { AiFillStar } from "react-icons/ai";
-import Data from "../../data/data.json";
-import { formatDate1 } from "../../utils/DateFunction";
+import { useSelector } from "react-redux";
+import { getCurrentUser } from "../../features/userSlice";
+import { selectCarsByUserId } from "../../features/carSlice";
+import EachReview from "../../components/cars/EachReview";
 
 function HostReview() {
+  const { userId } = useSelector(getCurrentUser);
+  const hostCars = useSelector((state) => selectCarsByUserId(state, userId));
+  const [selectedCarId, setSelectedCarId] = useState(hostCars[0]?.carId);
+  if (!selectedCarId) return <div>Loading...</div>;
+  const selectedCar = hostCars.find((car) => car?.carId === selectedCarId);
+  const reviewLength = selectedCar.reviews.length;
+  const ratingCounts = new Array(5).fill(0);
+  selectedCar.reviews.forEach((review) => {
+    ratingCounts[review.rating] = (ratingCounts[review.rating] || 0) + 1;
+  });
   return (
     <Cointainer>
-      <div className="header">
-        <header>
-          <h1>Your reviews</h1>
-          <p>
-            last <span>30 days</span>
-          </p>
-        </header>
-        <div>
-          <div className="starHeader">
-            <h2>4.5</h2>
-            <p>
-              <AiFillStar />
-              overall rating
-            </p>
-          </div>
-          <div className="stars">
-            <div>
-              <p>5 stars</p>
-              <RatingBar totalRatings={100} starCount={70} />
-              <p>70%</p>
-            </div>
-            <div>
-              <p>4 stars</p>
-              <RatingBar totalRatings={100} starCount={50} />
-              <p>50%</p>
-            </div>
-            <div>
-              <p>3 stars</p>
-              <RatingBar totalRatings={100} starCount={30} />
-              <p>30%</p>
-            </div>
-            <div>
-              <p>2 stars</p>
-              <RatingBar totalRatings={100} starCount={10} />
-              <p>10%</p>
-            </div>
-            <div>
-              <p>1 star&nbsp;</p>
-              <RatingBar totalRatings={100} starCount={5} />
-              <p>5%</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="review">
-        <div className="reviewHeader">
-          <h2>Reviews {`(${Data.reviews.length})`}</h2>
-        </div>
-        <div className="allReviews">
-          {Data.reviews.map((review, index) => {
+      <h1>Reviews for cars</h1>
+      <div>
+        <div className="reviewCars">
+          {hostCars.map((car) => {
             return (
-              <article key={index}>
-                <div className="reviewStar">
-                  {[1, 2, 3, 4, 5].map((star, index) => {
-                    return star <= review.star && <AiFillStar key={index} />;
-                  })}
+              <article
+                key={car.carId}
+                onClick={() => setSelectedCarId(car.carId)}
+                className={selectedCarId === car.carId ? "active" : ""}
+              >
+                <div className="reviewCarImg">
+                  <img src={car.carPhotos[0]} alt={car.carName} />
                 </div>
-                <div className="reviewedBy">
-                  {review.reviewedBy}
-                  <span>{formatDate1(review.reviewedOn)}</span>
+                <div className="reviewCarDetails">
+                  <h3>{car.carName}</h3>
+                  <p>{car.carNumber}</p>
                 </div>
-                <div className="reviewDesc">{review.review}</div>
               </article>
             );
           })}
+        </div>
+        <div className="reviewDetails">
+          <div className="header">
+            <div className="starHeader">
+              <h2>
+                {selectedCar.reviews.reduce((a, b) => b.rating + a, 0) /
+                  reviewLength || 0}
+              </h2>
+              <p>
+                <AiFillStar />
+                overall rating
+              </p>
+            </div>
+            <div className="stars">
+              {[5, 4, 3, 2, 1].map((star) => {
+                return (
+                  <RatingBar
+                    totalRatings={100}
+                    starCount={(ratingCounts[star] / reviewLength) * 100}
+                    star={star}
+                  />
+                );
+              })}
+            </div>
+          </div>
+          <div className="review">
+            <div className="reviewHeader">
+              <h2>Reviews {`(${reviewLength})`}</h2>
+            </div>
+            <div className="allReviews">
+              {selectedCar.reviews.map((review) => {
+                return <EachReview review={review} key={review.reviewOn} />;
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </Cointainer>
   );
 }
 
-function RatingBar({ totalRatings, starCount }) {
+function RatingBar({ totalRatings, starCount, star }) {
   const percentage = (starCount / totalRatings) * 100;
   return (
-    <div className="rating-bar">
-      <div className="filled" style={{ width: `${percentage}%` }}></div>
-      <div className="empty" style={{ width: `${100 - percentage}%` }}></div>
-    </div>
+    <article>
+      <p>{star} stars</p>
+      <div className="rating-bar">
+        <div className="filled" style={{ width: `${percentage}%` }}></div>
+        <div className="empty" style={{ width: `${100 - percentage}%` }}></div>
+      </div>
+      <p>{starCount}%</p>
+    </article>
   );
 }
 
 const Cointainer = styled.section`
   padding: 1.5rem 1rem;
-  display: flex;
-  gap: 2rem;
-  .header {
+  & > div {
     display: flex;
-    flex-direction: column;
     gap: 1rem;
-    width: 50%;
-    & > header {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      & > h1 {
-        font-size: 1.7rem;
-      }
-      & > p {
-        & > span {
-          text-decoration: underline;
-          text-underline-offset: 0.2rem;
-        }
-      }
-    }
-    & > div {
-      .starHeader {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        & > p > svg {
-          color: #ff8c38;
-        }
-      }
-      .stars {
-        padding: 2rem 0;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        & > div {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          .rating-bar {
-            width: 70%;
-            display: flex;
-            height: 8px;
-            background-color: #ddd;
-            border-radius: 11rem;
-            overflow: hidden;
-            .filled {
-              background-color: #ff8c38;
-            }
-            .empty {
-              background-color: #b9b9b9;
-            }
-            @media only screen and (max-width: 670px) {
-              width: 55%;
-            }
-          }
-        }
-      }
-    }
-  }
-  .review {
-    width: 50%;
-    .allReviews {
-      margin-top: 1rem;
+    .reviewCars {
+      width: 20rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      height: 30.5rem;
+      overflow-y: auto;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid rgba(22, 22, 22, 0.5);
+      border-radius: 0.3rem;
       & > article {
         display: flex;
-        flex-direction: column;
         gap: 0.5rem;
-        .reviewStar {
-          & > svg {
+        padding: 0.5rem;
+        border-radius: 0.3rem;
+        background-color: white;
+        box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        &.active {
+          background-color: lightgray;
+          transform: scale(1.02);
+        }
+        .reviewCarImg {
+          img {
+            width: 5rem;
+            height: 3rem;
+            border-radius: 0.3rem;
+          }
+        }
+        .reviewCarDetails {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          justify-content: center;
+        }
+      }
+    }
+    .reviewDetails {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 1rem;
+      padding: 1rem;
+      border: 1px solid rgba(22, 22, 22, 0.5);
+      border-radius: 0.3rem;
+      .header {
+        .starHeader {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          & > p > svg {
             color: #ff8c38;
           }
         }
-        .reviewedBy {
+        .stars {
+          padding: 2rem 0;
           display: flex;
-          gap: 0.3rem;
-          & > span {
-            color: #8c8c8c;
+          flex-direction: column;
+          gap: 1rem;
+          & > article {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            .rating-bar {
+              width: 70%;
+              display: flex;
+              height: 8px;
+              background-color: #ddd;
+              border-radius: 11rem;
+              overflow: hidden;
+              .filled {
+                background-color: #ff8c38;
+              }
+              .empty {
+                background-color: #b9b9b9;
+              }
+              @media only screen and (max-width: 670px) {
+                width: 55%;
+              }
+            }
           }
         }
-        .reviewDesc {
-          text-align: justify;
+      }
+      .review {
+        .allReviews {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem;
+          max-height: 30.5rem;
+          overflow-y: auto;
         }
       }
+      @media screen and (max-width: 1000px) {
+        grid-template-columns: 1fr;
+      }
     }
-  }
-  @media only screen and (max-width: 670px) {
-    padding: 1rem 0;
-    flex-direction: column;
-    .header,
-    .review {
-      width: 100%;
+    @media only screen and (max-width: 670px) {
+      flex-direction: column;
+      .reviewCars {
+        width: 91%;
+      }
     }
   }
 `;

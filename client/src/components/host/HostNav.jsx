@@ -6,7 +6,7 @@ function HostNav() {
   return (
     <Cointainer>
       <nav>
-        <ul>
+        <ul className="menuBar">
           <li>
             <NavLink to="" end>
               Dashboard
@@ -38,20 +38,6 @@ const Cointainer = styled.section`
       display: flex;
       gap: 1.5rem;
       padding: 0;
-      & > li {
-        list-style: none;
-        & > a {
-          color: #4d4d4d;
-          transition: all 0.3s ease-in-out;
-        }
-        & > a:hover,
-        .active {
-          color: #161616;
-          font-weight: bold;
-          text-decoration: underline;
-          text-underline-offset: 0.2rem;
-        }
-      }
     }
   }
   @media only screen and (max-width: 420px) {

@@ -1,30 +1,97 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { LiaUserCircle } from "react-icons/lia";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  toastOptionsError,
+  toastOptionsSuccess,
+} from "../../utils/ToastOptions";
 import { MdAccountBox, MdCreditScore } from "react-icons/md";
 import { FaBuyNLarge } from "react-icons/fa";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { AiFillGift } from "react-icons/ai";
 import { BiCopy } from "react-icons/bi";
-import { selectUserInfoById } from "../../features/userSlice";
+import ROLE from "../../utils/role.js";
+import {
+  clearUser,
+  getCurrentUser,
+  selectUserInfoById,
+  uploadProfilePic,
+} from "../../features/userSlice";
+import { logoutApi } from "../../utils/handleApi.js";
 
 function Profile() {
-  const { userId } = useParams();
+  const { userId, accessToken } = useSelector(getCurrentUser);
   const userInfo = useSelector((state) => selectUserInfoById(state, userId));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    const res = await logoutApi();
+    if (res.data.status) {
+      dispatch(clearUser());
+      toast.success(res.data.msg, toastOptionsSuccess);
+      navigate("/login");
+    } else {
+      toast.error("Something went wrong", toastOptionsError);
+    }
+  };
+
+  const handleImageUpload = (e) => {
+    e.preventDefault();
+    const files = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(files);
+    reader.onload = () => {
+      const image = reader.result;
+      try {
+        if (image === "") return;
+        dispatch(
+          uploadProfilePic({
+            details: {
+              userId: userId,
+              profilePic: image,
+            },
+            token: accessToken,
+          })
+        );
+      } catch (err) {
+        toast.error("Something went wrong", toastOptionsError);
+      }
+    };
+  };
+
   if (!userInfo) return <div>Loading...</div>;
   return (
     <Cointainer>
       <div>
         <aside>
           <header>
-            <LiaUserCircle />
+            <label className="userImage">
+              <img
+                src={
+                  userInfo.profilePic
+                    ? userInfo.profilePic
+                    : "/assets/userCircle.png"
+                }
+                alt={userInfo.name}
+                draggable="false"
+              />
+              <input
+                type="file"
+                accept=".jpg, .jpeg, .png"
+                name="prifilePic"
+                max={1}
+                onChange={handleImageUpload}
+              />
+            </label>
             <h2>{userInfo.name}</h2>
             <p>{userInfo.phone}</p>
             <p>{userInfo.email}</p>
             <p>{userInfo.city}</p>
-            <button>Become a Host</button>
+            {userInfo.role === ROLE.USER && <button>Become a Host</button>}
           </header>
           <nav>
             <ul>
@@ -60,7 +127,7 @@ function Profile() {
                 <div>
                   <p>Share the promo code to get 10% off</p>
                   <p>
-                    Your Promocode : 35f25n92{" "}
+                    Your Promocode : 35f25n92&nbsp;
                     <BiCopy
                       onClick={() => navigator.clipboard.writeText("35f25n92")}
                     />
@@ -69,7 +136,7 @@ function Profile() {
               </li>
               <div className="line" />
               <li>
-                <button>Logout</button>
+                <button onClick={handleLogout}>Logout</button>
               </li>
             </ul>
           </nav>
@@ -96,8 +163,16 @@ const Cointainer = styled.section`
         flex-direction: column;
         align-items: center;
         gap: 0.4rem;
-        & > svg {
-          font-size: 7rem;
+        .userImage {
+          img {
+            cursor: pointer;
+            width: 7rem;
+            height: 7rem;
+            border-radius: 50%;
+          }
+          & > input {
+            display: none;
+          }
         }
         & > button {
           background-color: #ff8c38;

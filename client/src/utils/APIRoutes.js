@@ -10,6 +10,7 @@ export const getAllUsersRoute = `${host}/auth/getAllUsers`;
 export const getUserRoute = `${host}/auth/getUser`;
 export const updateUserInfoRoute = `${host}/auth/updateUserInfo`;
 export const updateSavedCarsRoute = `${host}/auth/updateSavedCars`;
+export const uploadProfilePicRoute = `${host}/auth/uploadProfilePic`;
 
 export const getAllCarsRoute = `${host}/car/getAllCars`;
 export const addCarRoute = `${host}/car/addCar`;

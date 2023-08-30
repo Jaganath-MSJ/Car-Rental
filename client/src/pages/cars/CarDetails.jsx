@@ -1,12 +1,9 @@
 import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { GoArrowLeft } from "react-icons/go";
-import {
-  AiFillStar,
-  AiFillSafetyCertificate,
-  AiFillRead,
-} from "react-icons/ai";
+import { AiFillSafetyCertificate, AiFillRead } from "react-icons/ai";
 import {
   MdOutlineAirlineSeatReclineNormal,
   MdPrivateConnectivity,
@@ -16,16 +13,16 @@ import {
 import { BsGearFill, BsSpeedometer2 } from "react-icons/bs";
 import { TbAirConditioning, TbCashBanknoteOff } from "react-icons/tb";
 import { FaAngleDown, FaAngleLeft } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
 import CarCategory from "../../components/cars/CarCategory";
-import { formatDate1 } from "../../utils/DateFunction";
 import CancelPolicy from "../../components/cars/CancelPolicy";
 import PriceSummary from "../../components/cars/PriceSummary";
 import RentCar from "../../components/cars/RentCar";
 import { selectCarById } from "../../features/carSlice";
-import { getCurrentUser, selectUserNameById } from "../../features/userSlice";
-import { SearchQuary } from "../../App";
+import { getCurrentUser } from "../../features/userSlice";
 import { selectRentalsByCustomerId } from "../../features/rentalSlice";
+import { SearchQuary } from "../../App";
+import CarAllPhotos from "../../components/cars/CarAllPhotos";
+import EachReview from "../../components/cars/EachReview";
 
 function CarDetails() {
   const { searchQuary } = useContext(SearchQuary);
@@ -44,6 +41,7 @@ function CarDetails() {
   const [coupanCode, setCoupanCode] = useState("");
   const [showFareSummary, setShowFareSummary] = useState(false);
   const [showRentCar, setShowRentCar] = useState(false);
+  const [showCarPhotos, setShowCarPhotos] = useState(false);
 
   if (!car) return <div>Loading...</div>;
   return (
@@ -96,7 +94,12 @@ function CarDetails() {
               <div className="carPrice">
                 <p>&#x20B9;{car.rent}/day</p>
               </div>
-              <button className="morePhotos">See more photos</button>
+              <button
+                className="morePhotos"
+                onClick={() => setShowCarPhotos(true)}
+              >
+                See more photos
+              </button>
             </div>
           </div>
           <div className="carDescription">
@@ -195,7 +198,7 @@ function CarDetails() {
             {(!searchQuary.startDate || !searchQuary.endDate) &&
               !isCarRented && (
                 <p className="error">
-                  Please select <Link to="/cars">pick-up and drop-off</Link>{" "}
+                  Please select <Link to="/">pick-up and drop-off</Link>&nbsp;
                   date to continue
                 </p>
               )}
@@ -234,32 +237,10 @@ function CarDetails() {
           carId={car.carId}
         />
       )}
+      {showCarPhotos && (
+        <CarAllPhotos onClose={setShowCarPhotos} carPhotos={car.carPhotos} />
+      )}
     </Container>
-  );
-}
-
-function EachReview({ review }) {
-  const reviewerName = useSelector((state) =>
-    selectUserNameById(state, review.userId)
-  );
-  return (
-    <article>
-      <div className="reviewStar">
-        {[1, 2, 3, 4, 5].map((star) => {
-          return (
-            <AiFillStar
-              key={star}
-              className={star <= review?.rating ? "rated" : ""}
-            />
-          );
-        })}
-      </div>
-      <div className="reviewedBy">
-        {reviewerName}
-        <span>{formatDate1(review.reviewedOn)}</span>
-      </div>
-      <div className="reviewDesc">{review.comment}</div>
-    </article>
   );
 }
 
@@ -307,6 +288,7 @@ const Container = styled.section`
         .carDetails {
           display: flex;
           flex-direction: column;
+          justify-content: space-between;
           gap: 1rem;
           padding: 0 0.2rem;
           .carType {
@@ -318,16 +300,9 @@ const Container = styled.section`
               justify-content: center;
               align-items: center;
               height: 2rem;
-              border-radius: 0.3rem;
-              color: #ffead0;
-            }
-            .fuel {
-              width: 5rem;
-              background-color: green;
-            }
-            .pick {
               width: 5.5rem;
-              background-color: blue;
+              border: 1px solid rgba(0, 0, 0, 0.3);
+              border-radius: 0.3rem;
             }
           }
           .carName {
@@ -403,33 +378,6 @@ const Container = styled.section`
           display: flex;
           flex-wrap: wrap;
           gap: 1.5rem;
-          & > article {
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #161616;
-            border-radius: 0.3rem;
-            padding: 0.5rem;
-            width: 15rem;
-            gap: 0.5rem;
-            .reviewStar {
-              svg {
-                font-size: 1.1rem;
-              }
-              .rated {
-                color: #ff8c38;
-              }
-            }
-            .reviewedBy {
-              display: flex;
-              gap: 0.3rem;
-              & > span {
-                color: #8c8c8c;
-              }
-            }
-            .reviewDesc {
-              text-align: justify;
-            }
-          }
         }
       }
       .cancellation {

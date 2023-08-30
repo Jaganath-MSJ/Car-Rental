@@ -8,6 +8,7 @@ import {
   getAllUser,
   updateUserInfo,
   updateSavedCars,
+  uploadProfilePic,
 } from "../controller/userController.js";
 
 const userRouter = express.Router();
@@ -19,4 +20,5 @@ userRouter.post("/refresh_token", refreshToken);
 userRouter.get("/getAllUsers", getAllUser);
 userRouter.post("/updateUserInfo", updateUserInfo);
 userRouter.post("/updateSavedCars", updateSavedCars);
+userRouter.post("/uploadProfilePic", uploadProfilePic);
 export default userRouter;
