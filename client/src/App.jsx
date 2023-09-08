@@ -28,6 +28,10 @@ import Profile from "./pages/profile/Profile";
 import ProfileAccount from "./pages/profile/ProfileAccount";
 import ProfileBookings from "./pages/profile/ProfileBookings";
 import ProfileSavedCar from "./pages/profile/ProfileSavedCar";
+import AdminPanel from "./components/admin/AdminPanel";
+import AdminDashBoard from "./pages/admin/AdminDashBoard";
+import AdminHostRequest from "./pages/admin/AdminHostRequest";
+import AdminCouponCode from "./pages/admin/AdminCouponCode";
 
 export const SearchQuary = createContext();
 
@@ -73,6 +77,11 @@ function App() {
 
           <Route path="review" element={<HostReview />} />
           <Route path="addCar" element={<HostAddCar />} />
+        </Route>
+        <Route path="admin" element={<AdminPanel />}>
+          <Route index element={<AdminDashBoard />} />
+          <Route path="hostRequest" element={<AdminHostRequest />} />
+          <Route path="couponCode" element={<AdminCouponCode />} />
         </Route>
 
         <Route path="*" element={<Page404 />} />

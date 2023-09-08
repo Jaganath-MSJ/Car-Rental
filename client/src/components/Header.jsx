@@ -37,6 +37,9 @@ function Header() {
         <li>
           <NavLink to="about">About</NavLink>
         </li>
+        <li>
+          <NavLink to="admin">Admin</NavLink>
+        </li>
         {role === ROLE.HOST && (
           <li>
             <NavLink to="host">Host</NavLink>

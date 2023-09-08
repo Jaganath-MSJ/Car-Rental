@@ -28,7 +28,7 @@ const rentalSchema = new mongoose.Schema({
   isDriverNeeded: {
     type: Boolean,
   },
-  status: {
+  couponCode: {
     type: String,
   },
 });
